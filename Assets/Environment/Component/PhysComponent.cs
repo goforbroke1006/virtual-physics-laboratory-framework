@@ -3,7 +3,9 @@ using UnityEditor;
 using UnityEngine;
 using System.Collections;
 
-public class PhysicsObjectBehaviour : MonoBehaviour {
+public class PhysComponent : MonoBehaviour
+{
+    public string Identifier;
 
 	// Use this for initialization
 	void Start () {
