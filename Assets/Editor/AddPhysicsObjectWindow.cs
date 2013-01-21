@@ -13,7 +13,7 @@ public class AddPhysicsObjectWindow : EditorWindow
 
     private string idError;
 
-    [MenuItem("Window/Add phys obj window")]
+    [MenuItem("Window/Add physics object")]
     public static void ShowWindow()
     {
         var window = EditorWindow.GetWindow(typeof (AddPhysicsObjectWindow));
@@ -23,16 +23,20 @@ public class AddPhysicsObjectWindow : EditorWindow
     private void OnGUI()
     {
         GUILayout.Label("Add physics object settings", EditorStyles.boldLabel);
+        GUILayout.Space(10);
 
-        GUILayout.BeginHorizontal();
+        /*GUILayout.BeginHorizontal();
         GUILayout.Label("Identifier");
         _identifier = GUILayout.TextField(_identifier);
-        GUILayout.EndHorizontal();
+        GUILayout.EndHorizontal();*/
+
+        _identifier = EditorGUILayout.TextField("Identifier", _identifier);
+
         idError = EditorPhysObjNameValidator.Validate(_identifier);
         if (idError.Length > 0)
             GUILayout.Label(idError, EditorStyles.boldLabel);
 
-        scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.ExpandWidth(true), GUILayout.Height(150));
+        scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.ExpandWidth(true), GUILayout.Height(100));
         foreach (string physObject in AvailPhysObjsRepository.Get().GetListPhysObjects())
         {
             if (GUILayout.Button(physObject))
