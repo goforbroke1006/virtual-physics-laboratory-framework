@@ -16,7 +16,8 @@ public class PhysObjectsManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        _physObjects = GetComponentsInChildren<PhysObject>().OfType<PhysObject>().ToList();
+        _physObjects = FindObjectsOfType(typeof(PhysObject)).OfType<PhysObject>().ToList();
+            //gameObject.transform.parent.gameObject.GetComponentsInChildren<PhysObject>().OfType<PhysObject>().ToList();
     }
 
     // Update is called once per frame
@@ -39,7 +40,7 @@ public class PhysObjectsManager : MonoBehaviour
         if (_currentPhysObject != null)
             GUI.Label(new Rect(10, 30, 230, 24), "Current phys component: " + _currentPhysObject.Identifier);
         else
-            GUI.Label(new Rect(10, 30, 230, 24), "Current phys component: ____");
+            GUI.Label(new Rect(10, 30, 230, 24), "Current phys component: ");
         
         if (_physObjects != null)
         {

@@ -5,6 +5,7 @@ using System.Collections;
 
 public class UserScript : MonoBehaviour
 {
+    public string Name = "";
     public string Code = "";
 
     // Use this for initialization
