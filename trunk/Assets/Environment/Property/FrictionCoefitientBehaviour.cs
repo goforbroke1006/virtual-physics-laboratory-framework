@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+[AddComponentMenu("VPL Library Behavior/Friction Coefitient (Коефициент трения)")]
 public class FrictionCoefitientBehaviour : MonoBehaviour {
 
 	// Use this for initialization
