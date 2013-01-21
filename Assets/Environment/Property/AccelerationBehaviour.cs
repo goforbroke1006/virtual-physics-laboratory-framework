@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using System.Collections;
 
+[AddComponentMenu("VPL Library Behavior/Acceleration (Ускорение)")]
 public class AccelerationBehaviour : MonoBehaviour {
 
     public Vector3 Acceleration = new Vector3(0.01f, 0, 0);

@@ -1,3 +1,4 @@
+/*
 using UnityEditor;
 using UnityEngine;
 using System.Collections;
@@ -24,36 +25,36 @@ public class CustomToolbar : MonoBehaviour
 
     private const string PATH_TO_PREFABS_FOLDER = "Assets/PhysicsObject/Prefab/";
 
-    [MenuItem("VPL Library/Graphics (Графика)/Primitives (Примитивы)/Cube (Куб)")]
+    [MenuItem("VPL Library/Physics Object (Физический объект)/Cube (Куб)")]
     public static void CreateCube()
     {
         EditorUtility.InstantiatePrefab(
             AssetDatabase.LoadAssetAtPath(PATH_TO_PREFABS_FOLDER + "Cube.prefab",
-            typeof(PhysComponent)));
+            typeof(PhysObject)));
     }
 
-    [MenuItem("VPL Library/Graphics (Графика)/Primitives (Примитивы)/Sphere (Сфера)")]
+    [MenuItem("VPL Library/Physics Object (Физический объект)/Sphere (Сфера)")]
     public static void CreateSphere()
     {
         EditorUtility.InstantiatePrefab(
             AssetDatabase.LoadAssetAtPath(PATH_TO_PREFABS_FOLDER + "Sphere.prefab",
-            typeof(PhysComponent)));
+            typeof(PhysObject)));
     }
 
-    [MenuItem("VPL Library/Graphics (Графика)/Primitives (Примитивы)/Cylinder (Цилиндр)")]
+    [MenuItem("VPL Library/Physics Object (Физический объект)/Cylinder (Цилиндр)")]
     public static void CreateCylinder()
     {
         EditorUtility.InstantiatePrefab(
             AssetDatabase.LoadAssetAtPath(PATH_TO_PREFABS_FOLDER + "Cylinder.prefab",
-            typeof(PhysComponent)));
+            typeof(PhysObject)));
     }
 
-    [MenuItem("VPL Library/Graphics (Графика)/Material point (Материальная точка)")]
+    [MenuItem("VPL Library/Physics Object (Физический объект)/Material point (Материальная точка)")]
     public static void CreateMaterialPoint()
     {
     }
 
-    [MenuItem("VPL Library/Graphics (Графика)/Weight 100g (Груз 100г)")]
+    [MenuItem("VPL Library/Physics Object (Физический объект)/Weight 100g (Груз 100г)")]
     public static void CreateWeight100()
     {
     }
@@ -79,3 +80,4 @@ public class CustomToolbar : MonoBehaviour
 
     #endregion
 }
+*/

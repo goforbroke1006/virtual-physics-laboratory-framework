@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using System.Collections;
 
-public class PhysComponent : MonoBehaviour
+public class PhysObject : MonoBehaviour
 {
     public string Identifier;
 
@@ -17,11 +17,11 @@ public class PhysComponent : MonoBehaviour
 	
 	}
 
-    void OnMouseOver()
+    void OnMouseDown()
     {
         try
         {
-            Camera.current.GetComponent<EnvironmentManager>().AddElement(this.gameObject);
+            gameObject.transform.parent.gameObject.GetComponent<PhysObjectsManager>().SetCurrentComponent(this);
         } catch(Exception exception)
         {
             Debug.LogError("PhysicsObjectBehaviour - OnMouseOver() - " + this.name + " - " + exception.Message);
