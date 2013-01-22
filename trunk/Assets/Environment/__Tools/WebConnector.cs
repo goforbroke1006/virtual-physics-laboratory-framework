@@ -1,10 +1,14 @@
+using System;
 using System.Globalization;
-using UnityEditor;
+using System.IO;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
 using UnityEngine;
-using System.Collections;
 
 public class WebConnector : MonoBehaviour
 {
+    private TcpClient _tcpClient = null;
     private string _ipAddress = string.Empty;
     private string _port = string.Empty;
     private int _packagesCounter = 0;
@@ -28,13 +32,38 @@ public class WebConnector : MonoBehaviour
         GUI.EndGroup();
     }
 
-    public string Calculate(string code)
+    /*public string Calculate(string code)
     {
+        if (_tcpClient == null)
+            if (_ipAddress.Length > 0 && _port.Length > 0)
+                _tcpClient = new TcpClient(_ipAddress, Convert.ToInt32(_port));
+
+
+        StreamWriter streamWriter = new StreamWriter(_tcpClient.GetStream());
+        streamWriter.WriteLine(code);
+        streamWriter.Flush();
         _packagesCounter++;
 
-        // send code to Maple with Sockets
+        StreamReader streamReader = new StreamReader(_tcpClient.GetStream());
+        return streamReader.ReadLine();
+    }*/
 
-        return "";
+    private string message;
+
+    public string Calculate(string code)
+    {
+        message = "Calculate";
+        IPEndPoint ipe = new IPEndPoint(IPAddress.Parse(_ipAddress), Convert.ToInt32(_port));
+        Socket socket = new Socket(ipe.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+        socket.Connect(ipe);
+        message = "Connecting";
+        socket.Send(Encoding.UTF8.GetBytes(code), Encoding.UTF8.GetBytes(code).Length, 0);
+        message = "Send";
+
+        byte[] bytesReceived = new byte[1024];
+        int bytes = socket.Receive(bytesReceived, bytesReceived.Length, 0);
+        message = "Received data";
+        return Encoding.UTF8.GetString(bytesReceived, 0, bytes);
     }
 
     string GetIpAddress()
