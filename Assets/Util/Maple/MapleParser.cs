@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 class MapleParser : IMathExpressionsParser
 {
     private List<PhysObject> _physObjects;
-    private readonly Regex _variableRegex = new Regex("");
+    private readonly Regex _variableRegex = new Regex(@"[\w_]+__[\w_]+(\s:=|:=|\s:=\s|:=\s)[0-9.][\n]");
 
     public void Process(string data, List<PhysObject> physObjects)
     {

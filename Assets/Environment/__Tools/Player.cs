@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
             foreach (UserScript script in FindObjectsOfType(typeof(UserScript)).OfType<UserScript>().ToList())
             {
                 string result = _webConnector.Calculate(script.Code);
-                // Apply result
+                new MapleParser().Process(result, FindObjectsOfType(typeof(PhysObject)).OfType<PhysObject>().ToList());
             }
         }
     }

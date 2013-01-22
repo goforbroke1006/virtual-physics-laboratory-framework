@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 
@@ -58,30 +59,23 @@ public class AddPhysicsObjectWindow : EditorWindow
         Repaint();
     }
 
-    private class EditorPhysObjNameValidator 
+    private static class EditorPhysObjNameValidator 
     {
          public static string Validate(string name)
          {
              string error = string.Empty;
 
-             int outInt;
-             string f = "";
-             if (name.Length > 0)
-                 f = name.Substring(0, 1);
-             
-             if (name.Length == 0)
-                 error = "Please type IDENTIFIER.";
-             else if (name.IndexOf(" ", System.StringComparison.Ordinal) > -1)
-                 error = "You must use letters, \nnumbers and \nsymbol '_' only. \nNot 'space' or specail symbols.";
-             else if (name.IndexOf("__", System.StringComparison.Ordinal) > -1)
-                 error = "Wrong symbol '__'.";
-             else if (int.TryParse(f, out outInt))
-                 error = "First symbol must be letter.";
+             Regex onlyLettersRegex = new Regex(@"^[\p{L}]+$");
 
-             List<PhysObject> list = GameObject.FindObjectsOfType(typeof(PhysObject)).OfType<PhysObject>().ToList();
-             foreach (PhysObject physObject in list)
-                 if (physObject.Identifier == name && name.Length > 0)
-                     error = "This name already exists.";
+             if (!onlyLettersRegex.IsMatch(name))
+             {
+                 if (new Regex(@"\d").IsMatch(name))
+                     error = "Numbers is not available.";
+                 else if (new Regex(@"_").IsMatch(name))
+                     error = "Underscore is not available.";
+                 else
+                     error = "Use only 'a-z' and 'A-Z' (not 'space', underscore and special symbols).";
+             }
 
              return error;
          }

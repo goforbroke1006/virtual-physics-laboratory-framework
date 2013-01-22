@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
-using System.Collections;
 
 public class PhysObjectsManager : MonoBehaviour
 {
