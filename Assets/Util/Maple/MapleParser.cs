@@ -3,23 +3,43 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using UnityEngine;
 
 class MapleParser : IMathExpressionsParser
 {
     private List<PhysObject> _physObjects;
-    private readonly Regex _variableRegex = new Regex(@"[\w_]+__[\w_]+(\s:=|:=|\s:=\s|:=\s)[0-9.][\n]");
+    private readonly Regex _variableRegex = new Regex(@"([A-Za-z]+)__([A-Za-z]+) := ([0-9.-]+)");
 
     public void Process(string data, List<PhysObject> physObjects)
     {
+        /*while (data.IndexOf(" ") > -1)
+        {
+            data.Replace(" ", "");
+        }*/
+
+        data = data.Replace(".", "0.");
+
+        Debug.Log("Applying to " + data);
         _physObjects = physObjects;
 
         var matches = _variableRegex.Matches(data);
+
+        Debug.Log("matches.Count = " + matches.Count);
+
         for (int i = 0; i < matches.Count; i++)
+        {
+            Debug.Log("Apply: " + matches[i].Groups[2].Value);
+
+            string numberVal = matches[i].Groups[3].Value;
+            if (numberVal.Substring(0, 1) == ".")
+                numberVal.Insert(0, "0");
+
             ApplyVariable(
-                matches[i].Groups[1].Value, 
-                matches[i].Groups[2].Value, 
-                matches[i].Groups[3].Value
+                matches[i].Groups[1].Value,
+                matches[i].Groups[2].Value,
+                numberVal
                 );
+        }
     }
 
     public void ApplyVariable(string identifier, string propertyName, object propertyValue)
@@ -28,7 +48,7 @@ class MapleParser : IMathExpressionsParser
         {
             if (physObject.Identifier == identifier)
             {
-                IProperty property = physObject.GetProperty(propertyName);
+                AbstractProperty property = physObject.GetProperty(propertyName);
                 if (property != null)
                     property.SetValue(propertyValue);
             }
