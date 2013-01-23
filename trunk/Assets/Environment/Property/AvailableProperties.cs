@@ -5,7 +5,7 @@ using System.Text;
 
 class AvailableProperties
 {
-    private readonly List<IProperty> _properties = new List<IProperty>();
+    private readonly List<AbstractProperty> _properties = new List<AbstractProperty>();
 
     private AvailableProperties()
     {
@@ -13,9 +13,9 @@ class AvailableProperties
         _properties.Add(new PositionY());
         _properties.Add(new PositionZ());
         
-        _properties.Add(new RotationX());
-        _properties.Add(new RotationY());
-        _properties.Add(new RotationZ());
+//        _properties.Add(new RotationX());
+//        _properties.Add(new RotationY());
+//        _properties.Add(new RotationZ());
     }
 
     private static AvailableProperties _instance = null;

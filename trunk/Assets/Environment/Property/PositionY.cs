@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 [AddComponentMenu("VPL Properties/Native/Position Y")]
-public class PositionY : MonoBehaviour, IProperty
+public class PositionY : AbstractProperty
 {
     // Use this for initialization
     void Start()
@@ -16,17 +16,17 @@ public class PositionY : MonoBehaviour, IProperty
         
     }
 
-    public string GetName()
+    public override string GetName()
     {
-        return "PositionY";
+        return "PosY";
     }
 
-    public object GetValue()
+    public override object GetValue()
     {
         return gameObject.transform.position.y;
     }
 
-    public void SetValue(object obj)
+    public override void SetValue(object obj)
     {
         gameObject.transform.position = new Vector3(
             gameObject.transform.position.x,

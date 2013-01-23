@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 [AddComponentMenu("VPL Properties/Native/Position Z")]
-public class PositionZ : MonoBehaviour, IProperty
+public class PositionZ : AbstractProperty
 {
     // Use this for initialization
     void Start()
@@ -16,17 +16,17 @@ public class PositionZ : MonoBehaviour, IProperty
 
     }
 
-    public string GetName()
+    public override string GetName()
     {
-        return "PositionZ";
+        return "PosZ";
     }
 
-    public object GetValue()
+    public override object GetValue()
     {
         return gameObject.transform.position.x;
     }
 
-    public void SetValue(object obj)
+    public override void SetValue(object obj)
     {
         gameObject.transform.position = new Vector3(
             gameObject.transform.position.x,

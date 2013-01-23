@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class WebConnector : MonoBehaviour
 {
-    private TcpClient _tcpClient = null;
+    //private TcpClient _tcpClient = null;
     private string _ipAddress = string.Empty;
     private string _port = string.Empty;
     private int _packagesCounter = 0;
@@ -16,7 +16,7 @@ public class WebConnector : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        // send request for get ip|port
+        //
     }
 
     void OnGUI()
@@ -30,6 +30,9 @@ public class WebConnector : MonoBehaviour
         GUI.Label(new Rect(10, 65, 70, 23), "Packages count:");
         GUI.Label(new Rect(80, 65, 120, 23), _packagesCounter.ToString(CultureInfo.InvariantCulture));
         GUI.EndGroup();
+
+        if (message.Length > 0)
+            GUI.Label(new Rect(150, 150, 400, 500), message);
     }
 
     /*public string Calculate(string code)
@@ -48,22 +51,49 @@ public class WebConnector : MonoBehaviour
         return streamReader.ReadLine();
     }*/
 
-    private string message;
+    private String message = "Message: ";
 
     public string Calculate(string code)
     {
-        message = "Calculate";
-        IPEndPoint ipe = new IPEndPoint(IPAddress.Parse(_ipAddress), Convert.ToInt32(_port));
-        Socket socket = new Socket(ipe.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-        socket.Connect(ipe);
-        message = "Connecting";
-        socket.Send(Encoding.UTF8.GetBytes(code), Encoding.UTF8.GetBytes(code).Length, 0);
-        message = "Send";
+        try
+        {
+            /*message += "Calculate ";
+            IPEndPoint ipe = new IPEndPoint(IPAddress.Parse(_ipAddress), Convert.ToInt32(_port));
+            Socket socket = new Socket(ipe.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            socket.Connect(ipe);
+            message += "Connecting\n";
+            socket.Send(Encoding.UTF8.GetBytes(code), Encoding.UTF8.GetBytes(code).Length, 0);
+            message += "Send ";
 
-        byte[] bytesReceived = new byte[1024];
-        int bytes = socket.Receive(bytesReceived, bytesReceived.Length, 0);
-        message = "Received data";
-        return Encoding.UTF8.GetString(bytesReceived, 0, bytes);
+            byte[] bytesReceived = new byte[1024];
+            int bytes = socket.Receive(bytesReceived, bytesReceived.Length, 0);
+            message += "Received data\n";
+            return Encoding.UTF8.GetString(bytesReceived, 0, bytes);*/
+
+            _ipAddress = "127.0.0.1";
+            _port = "1935";
+
+            //Security.PrefetchSocketPolicy(_ipAddress, Convert.ToInt32(_port));
+            TcpClient Client = new TcpClient();
+
+            Client.Connect(IPAddress.Parse(_ipAddress), Convert.ToInt32(_port));
+            Socket socket = Client.Client;
+
+            message += "Connecting\n";
+            socket.Send(Encoding.UTF8.GetBytes(code), Encoding.UTF8.GetBytes(code).Length, 0);
+            message += "Send\n";
+
+            byte[] bytesReceived = new byte[1024];
+            int bytes = socket.Receive(bytesReceived, bytesReceived.Length, 0);
+            string response = Encoding.UTF8.GetString(bytesReceived, 0, bytes);
+            message += "Resp: " + response + "\n";
+            return response;
+        }
+        catch (Exception exception)
+        {
+            message += "\n" + exception.Message + "\n";
+            return "error";
+        }
     }
 
     string GetIpAddress()
