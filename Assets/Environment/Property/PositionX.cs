@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using UnityEngine;
 using System.Collections;
 
@@ -8,7 +9,7 @@ public class PositionX : AbstractProperty
     // Use this for initialization
     void Start()
     {
-
+        //
     }
 
     // Update is called once per frame
@@ -38,12 +39,12 @@ public class PositionX : AbstractProperty
         return "PosX";
     }
 
-    public override object GetValue()
+    public override string GetValue()
     {
-        return gameObject.transform.position.x;
+        return gameObject.transform.position.x.ToString(CultureInfo.InvariantCulture);
     }
 
-    public override void SetValue(object obj)
+    public override void SetValue(string val)
     {
         // old position x
         Debug.Log(string.Format("old x {0} {1} {2}", 
@@ -52,11 +53,11 @@ public class PositionX : AbstractProperty
             gameObject.transform.position.z
             ));
 
-        gameObject.transform.position.Set(float.Parse(obj.ToString()),
+        /*gameObject.transform.position.Set(float.Parse(val),
             gameObject.transform.position.y,
-            gameObject.transform.position.z);
+            gameObject.transform.position.z);*/
         gameObject.transform.position = new Vector3(
-            float.Parse(obj.ToString()),
+            float.Parse(val),
             gameObject.transform.position.y,
             gameObject.transform.position.z
             );

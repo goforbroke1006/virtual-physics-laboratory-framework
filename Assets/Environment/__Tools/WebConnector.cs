@@ -4,16 +4,14 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using UnityEngine;
 
 public class WebConnector : MonoBehaviour
 {
-    //private TcpClient _tcpClient = null;
-    private string _ipAddress = string.Empty;
-    private string _port = string.Empty;
-    private int _packagesCounter = 0;
+    private Vector2 _packagesCounter = new Vector2(0,0);
+    private MapleParser _parser = new MapleParser();
 
-    // Use this for initialization
     void Start()
     {
         //
@@ -23,97 +21,55 @@ public class WebConnector : MonoBehaviour
     {
         GUI.BeginGroup(new Rect(Screen.width - 205, Screen.height - 105, 200, 100));
         GUI.Box(new Rect(0, 0, 200, 100), "Web Connector");
-        GUI.Label(new Rect(10, 25, 70, 23), "Ip address:");
-        GUI.Label(new Rect(80, 25, 120, 23), _ipAddress);
-        GUI.Label(new Rect(10, 45, 70, 23), "Port:");
-        GUI.Label(new Rect(80, 45, 120, 23), _port);
-        GUI.Label(new Rect(10, 65, 70, 23), "Packages count:");
-        GUI.Label(new Rect(80, 65, 120, 23), _packagesCounter.ToString(CultureInfo.InvariantCulture));
+        GUI.Label(new Rect(10, 65, 70, 23), "Send/Received packs:");
+        GUI.Label(new Rect(80, 65, 120, 23), _packagesCounter.x.ToString(CultureInfo.InvariantCulture) + "/" + _packagesCounter.y.ToString(CultureInfo.InvariantCulture));
         GUI.EndGroup();
 
         if (message.Length > 0)
             GUI.Label(new Rect(150, 150, 400, 500), message);
+
+        if (message.Length > 500)
+            message = "Message: ";
     }
-
-    /*public string Calculate(string code)
-    {
-        if (_tcpClient == null)
-            if (_ipAddress.Length > 0 && _port.Length > 0)
-                _tcpClient = new TcpClient(_ipAddress, Convert.ToInt32(_port));
-
-
-        StreamWriter streamWriter = new StreamWriter(_tcpClient.GetStream());
-        streamWriter.WriteLine(code);
-        streamWriter.Flush();
-        _packagesCounter++;
-
-        StreamReader streamReader = new StreamReader(_tcpClient.GetStream());
-        return streamReader.ReadLine();
-    }*/
-
+    
     private String message = "Message: ";
 
-    public string Calculate(string code)
+    /*public string Calculate(string expression)
     {
-        try
+        ExternallCall(expression);
+        int wait = 0;
+        /*while (true)
         {
-            /*message += "Calculate ";
-            IPEndPoint ipe = new IPEndPoint(IPAddress.Parse(_ipAddress), Convert.ToInt32(_port));
-            Socket socket = new Socket(ipe.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-            socket.Connect(ipe);
-            message += "Connecting\n";
-            socket.Send(Encoding.UTF8.GetBytes(code), Encoding.UTF8.GetBytes(code).Length, 0);
-            message += "Send ";
+            if (_mapleResponse.Length > 0)
+            {
+                string temp = _mapleResponse;
+                _mapleResponse = "";
+                return temp;
+            }
+            if (wait == 60)
+            {
+                break;
+            }
+            Thread.Sleep(50);
+            wait++;
+        }#1#
+        return "Maple not answer during 3 second...";
+    }*/
 
-            byte[] bytesReceived = new byte[1024];
-            int bytes = socket.Receive(bytesReceived, bytesReceived.Length, 0);
-            message += "Received data\n";
-            return Encoding.UTF8.GetString(bytesReceived, 0, bytes);*/
-
-            _ipAddress = "127.0.0.1";
-            _port = "1935";
-
-            //Security.PrefetchSocketPolicy(_ipAddress, Convert.ToInt32(_port));
-            TcpClient Client = new TcpClient();
-
-            Client.Connect(IPAddress.Parse(_ipAddress), Convert.ToInt32(_port));
-            Socket socket = Client.Client;
-
-            message += "Connecting\n";
-            socket.Send(Encoding.UTF8.GetBytes(code), Encoding.UTF8.GetBytes(code).Length, 0);
-            message += "Send\n";
-
-            byte[] bytesReceived = new byte[1024];
-            int bytes = socket.Receive(bytesReceived, bytesReceived.Length, 0);
-            string response = Encoding.UTF8.GetString(bytesReceived, 0, bytes);
-            message += "Resp: " + response + "\n";
-            return response;
-        }
-        catch (Exception exception)
-        {
-            message += "\n" + exception.Message + "\n";
-            return "error";
-        }
-    }
-
-    string GetIpAddress()
+    public void ExternallCall(string data)
     {
-        return _ipAddress;
+        _packagesCounter.x++;
+        message += "\nSend: " + data;
+        if (data.Length > 0)
+            Application.ExternalCall("MapleCalculate", data);
     }
 
-    void SetIpAddress(string ipAddress)
+//    private string _mapleResponse = "";
+    public void UnityCall(string data)
     {
-        _ipAddress = ipAddress;
+        _packagesCounter.y++;
+        _parser.Process(data, PhysObjectsManager.PhysObjects);
+        message += "\nReceiv: " + data;
+//        _mapleResponse = data;
     }
-
-    string GetPort()
-    {
-        return _port;
-    }
-
-    void SetPort(string port)
-    {
-        _port = port;
-    }
-
 }

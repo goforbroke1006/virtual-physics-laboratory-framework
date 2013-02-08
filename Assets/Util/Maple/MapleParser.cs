@@ -17,7 +17,8 @@ class MapleParser : IMathExpressionsParser
             data.Replace(" ", "");
         }*/
 
-        data = data.Replace(".", "0.");
+        if (data.IndexOf(".") == 0 || (data.IndexOf(".") == 1 && data.IndexOf("-") == 0))
+            data = data.Replace(".", "0.");
 
         Debug.Log("Applying to " + data);
         _physObjects = physObjects;
@@ -42,7 +43,7 @@ class MapleParser : IMathExpressionsParser
         }
     }
 
-    public void ApplyVariable(string identifier, string propertyName, object propertyValue)
+    public void ApplyVariable(string identifier, string propertyName, string propertyValue)
     {
         foreach (PhysObject physObject in _physObjects)
         {

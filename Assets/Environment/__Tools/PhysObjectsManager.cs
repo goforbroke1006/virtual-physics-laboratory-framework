@@ -6,16 +6,16 @@ public class PhysObjectsManager : MonoBehaviour
 {
     public Texture InfoTexture;
 
-    private List<PhysObject> _physObjects;
+    public static List<PhysObject> PhysObjects;
     private PhysObject _currentPhysObject;
 
-    private Rect _windowPosition = new Rect(10, 10, 250, 350);
+    private Rect _windowPosition = new Rect(10, 10, 200, Screen.height / 2);
 
     // Use this for initialization
     void Start()
     {
-        _physObjects = FindObjectsOfType(typeof(PhysObject)).OfType<PhysObject>().ToList();
-            //gameObject.transform.parent.gameObject.GetComponentsInChildren<PhysObject>().OfType<PhysObject>().ToList();
+        PhysObjects = FindObjectsOfType(typeof(PhysObject)).OfType<PhysObject>().ToList();
+        //gameObject.transform.parent.gameObject.GetComponentsInChildren<PhysObject>().OfType<PhysObject>().ToList();
     }
 
     // Update is called once per frame
@@ -36,17 +36,17 @@ public class PhysObjectsManager : MonoBehaviour
     void DoPhysComponentsManagetWindowPosition(int id)
     {
         if (_currentPhysObject != null)
-            GUI.Label(new Rect(10, 30, 230, 24), "Current phys component: " + _currentPhysObject.Identifier);
+            GUI.Label(new Rect(10, 30, _windowPosition.width - 20, 24), "Current phys component: " + _currentPhysObject.Identifier);
         else
-            GUI.Label(new Rect(10, 30, 230, 24), "Current phys component: ");
-        
-        if (_physObjects != null)
+            GUI.Label(new Rect(10, 30, _windowPosition.width - 20, 24), "Current phys component: ");
+
+        if (PhysObjects != null)
         {
             int counter = 0;
-            GUI.BeginScrollView(new Rect(10, 50, 230, 300), new Vector2(0, 100), new Rect(0, 0, 230, 300));
-            foreach (PhysObject component in _physObjects)
+            GUI.BeginScrollView(new Rect(10, 50, _windowPosition.width - 20, 300), new Vector2(0, 100), new Rect(0, 0, _windowPosition.width - 20, 300));
+            foreach (PhysObject component in PhysObjects)
             {
-                if (GUI.Button(new Rect(0, counter * 24, 230, 24), component.Identifier))
+                if (GUI.Button(new Rect(0, counter * 24, _windowPosition.width - 20, 24), component.Identifier))
                     this.SetCurrentComponent(component);
                 counter++;
             }
@@ -55,10 +55,19 @@ public class PhysObjectsManager : MonoBehaviour
         else
             Debug.Log("Has not Phys Components");
 
-//        GUI.DrawTexture(new Rect(10, 220, 20, 20), new Texture());
+        // Draw INFO button
+        GUI.DrawTexture(new Rect(10, _windowPosition.height - 40, 30, 30), InfoTexture);
+        if (GUI.Button(new Rect(10, _windowPosition.height - 40, 30, 30), ""))
+        {
+            // TODO: show inforamtion about current Phys-Object
+        }
 
-        GUI.DrawTexture(new Rect(40, 220, 20, 20), InfoTexture);
-        GUI.Button(new Rect(40, 220, 20, 20), "");
+        // Draw EDIT button
+        GUI.DrawTexture(new Rect(45, _windowPosition.height - 40, 30, 30), InfoTexture);
+        if (GUI.Button(new Rect(45, _windowPosition.height - 40, 30, 30), ""))
+        {
+            // TODO: show window for edit properties of current Phys-Object
+        }
 
         GUI.DragWindow();
     }

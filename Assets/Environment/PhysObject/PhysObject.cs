@@ -20,9 +20,14 @@ public class PhysObject : MonoBehaviour
 
     }
 
+    public List<AbstractProperty> GetProperties()
+    {
+        return GetComponents<AbstractProperty>().OfType<AbstractProperty>().ToList();
+    }
+
     public AbstractProperty GetProperty(string name)
     {
-        List<AbstractProperty> list = FindObjectsOfType(typeof(AbstractProperty)).OfType<AbstractProperty>().ToList();
+        List<AbstractProperty> list = GetProperties();
         foreach (AbstractProperty property in list)
         {
             if (property.GetName() == name)
