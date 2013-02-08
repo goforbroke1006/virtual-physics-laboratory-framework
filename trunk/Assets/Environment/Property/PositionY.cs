@@ -1,3 +1,4 @@
+using System.Globalization;
 using UnityEngine;
 using System.Collections;
 
@@ -21,16 +22,16 @@ public class PositionY : AbstractProperty
         return "PosY";
     }
 
-    public override object GetValue()
+    public override string GetValue()
     {
-        return gameObject.transform.position.y;
+        return gameObject.transform.position.y.ToString(CultureInfo.InvariantCulture);
     }
 
-    public override void SetValue(object obj)
+    public override void SetValue(string val)
     {
         gameObject.transform.position = new Vector3(
             gameObject.transform.position.x,
-            (float) obj,
+            float.Parse(val),
             gameObject.transform.position.z
             );
     }
