@@ -1,0 +1,28 @@
+restart: 
+start:=${start}: 
+finish:=${stop}: 
+step:=${step}: 
+ctime:=${ctime}: 
+calc_count:=(finish-start)/step: 
+counter:=1: 
+
+${define_variables}
+
+${define_variables_fields}
+
+while 
+    start <= ctime + step and 
+    ctime + step <= finish 
+do
+    ${paste_formulas}
+
+    ctime := ctime + step:
+
+    ${fill_fields}
+
+    counter := counter + 1:
+end:
+
+${return_fields}
+
+print('endl');
