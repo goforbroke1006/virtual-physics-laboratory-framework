@@ -1,0 +1,35 @@
+restart: 
+start:=0: 
+finish:=3: 
+step:=0.1: 
+ctime:=0: 
+calc_count:=(finish-start)/step: 
+counter:=1: 
+
+co__PosX:=-1: ct__PosX:=1: 
+
+co__PosX__field(1..calc_count): ct__PosX__field(1..calc_count): 
+
+while 
+    start <= ctime + step and 
+    ctime + step <= finish 
+do
+    co__PosX:=co__PosX-0.002: ct__PosX:=ct__PosX+0.002: 
+
+    ctime := ctime + step:
+
+    co__PosX__field[counter]:=co__PosX: ct__PosX__field[counter]:=ct__PosX: 
+
+    counter := counter + 1:
+end:
+
+co__PosX__field = seq(co__PosX__field[i], i=1..calc_count); print('endl'); ct__PosX__field = seq(ct__PosX__field[i], i=1..calc_count); print('endl'); 
+
+
+===========================================================
+
+([a-zA-Z_]+\s=\sseq\([\w_\[\]\(\)\;\,\.\=\s]+print\(\'endl\'\)\;)
+|
+(while[a-zA-Z0-9\s_.,\+\-\*\/\[\]\(\)\=\<\>\:]+end:)
+|
+([a-zA-Z_]+:=[a-zA-Z0-9\s_.,\+\-\*\/\[\]\(\)]+[:$])

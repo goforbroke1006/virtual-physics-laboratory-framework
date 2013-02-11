@@ -8,7 +8,7 @@ using Object = UnityEngine.Object;
 
 public class AvailPhysObjsRepository
 {
-    private const string PATH_TO_PREFABS_FOLDER = "Assets/Environment/PhysObject/";
+    private const string PATH_TO_PREFABS_FOLDER = "Assets/Environment/PhysicsObject/";
     private readonly List<string> _physObjects = new List<string>();
 
     private AvailPhysObjsRepository()
@@ -35,8 +35,8 @@ public class AvailPhysObjsRepository
 
     public void CreatePhysObjectByPrefabName(string name, string id)
     {
-        string path = string.Format("Assets/Environment/PhysObject/{0}.prefab", name);
+        string path = string.Format("Assets/Environment/PhysicsObject/{0}.prefab", name);
         GameObject gameObj = (GameObject)Object.Instantiate(AssetDatabase.LoadAssetAtPath(path, typeof(GameObject)));
-        gameObj.GetComponent<PhysObject>().Identifier = id;
+        gameObj.GetComponent<PhysicsObject>().Identifier = id;
     }
 }

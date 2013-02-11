@@ -30,7 +30,7 @@ public class CustomToolbar : MonoBehaviour
     {
         EditorUtility.InstantiatePrefab(
             AssetDatabase.LoadAssetAtPath(PATH_TO_PREFABS_FOLDER + "Cube.prefab",
-            typeof(PhysObject)));
+            typeof(PhysicsObject)));
     }
 
     [MenuItem("VPL Library/Physics Object (Физический объект)/Sphere (Сфера)")]
@@ -38,7 +38,7 @@ public class CustomToolbar : MonoBehaviour
     {
         EditorUtility.InstantiatePrefab(
             AssetDatabase.LoadAssetAtPath(PATH_TO_PREFABS_FOLDER + "Sphere.prefab",
-            typeof(PhysObject)));
+            typeof(PhysicsObject)));
     }
 
     [MenuItem("VPL Library/Physics Object (Физический объект)/Cylinder (Цилиндр)")]
@@ -46,7 +46,7 @@ public class CustomToolbar : MonoBehaviour
     {
         EditorUtility.InstantiatePrefab(
             AssetDatabase.LoadAssetAtPath(PATH_TO_PREFABS_FOLDER + "Cylinder.prefab",
-            typeof(PhysObject)));
+            typeof(PhysicsObject)));
     }
 
     [MenuItem("VPL Library/Physics Object (Физический объект)/Material point (Материальная точка)")]
