@@ -16,15 +16,15 @@ public class PhysicsObjectsManager : MonoBehaviour
             0,
             _windowPosition,
             DoPhysComponentsManagetWindowPosition,
-            "Phys Components");
+            "Физические объекты");
     }
 
     void DoPhysComponentsManagetWindowPosition(int id)
     {
         if (_currentPhysicsObject != null)
-            GUI.Label(new Rect(10, 30, _windowPosition.width - 20, 24), "Current phys component: " + _currentPhysicsObject.Identifier);
+            GUI.Label(new Rect(10, 30, _windowPosition.width - 20, 24), "Текущий элемент: " + _currentPhysicsObject.Identifier);
         else
-            GUI.Label(new Rect(10, 30, _windowPosition.width - 20, 24), "Current phys component: ");
+            GUI.Label(new Rect(10, 30, _windowPosition.width - 20, 24), "Текущий элемент: ");
 
         if (GetPhysicsObjects() != null)
         {

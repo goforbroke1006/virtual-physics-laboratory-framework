@@ -31,6 +31,8 @@ class MapleCalculator
         _labPlayer = labPlayer;
         _console = console;
 
+        _console.AddMessage("MapleCalculator - Calculate - Code for calculating: \n" + code);
+
         if (!_started)
             StartMaple();
         expressions = GetExpressionsList(code);

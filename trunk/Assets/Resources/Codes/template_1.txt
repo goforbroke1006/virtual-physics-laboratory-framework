@@ -14,13 +14,13 @@ while
     start <= ctime + step and 
     ctime + step <= finish 
 do
-    ${paste_formulas}
 
-    ctime := ctime + step:
+${fill_fields}
 
-    ${fill_fields}
+${paste_formulas}
 
-    counter := counter + 1:
+ctime := ctime + step:
+counter := counter + 1:
 end:
 
 ${return_fields}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public class MapleBuilder : AbstractBuilder
@@ -35,7 +36,7 @@ public class MapleBuilder : AbstractBuilder
         string result = "";
         foreach (PhysicsObject physicsObject in PhysicsObjects)
             foreach (AbstractProperty property in physicsObject.GetProperties())
-                result += string.Format("{0}__{1}:={2}: ", physicsObject.Identifier, property.GetName(), property.GetValue());
+                result += string.Format("{0}__{1}:={2}: \n", physicsObject.Identifier, property.GetName(), property.GetValue());
         return result;
     }
 
@@ -44,15 +45,24 @@ public class MapleBuilder : AbstractBuilder
         string result = "";
         foreach (PhysicsObject physicsObject in PhysicsObjects)
             foreach (AbstractProperty property in physicsObject.GetProperties())
-                result += string.Format("{0}__{1}__field(1..calc_count): ", physicsObject.Identifier, property.GetName());
+                result += string.Format("{0}__{1}__field(1..calc_count): \n", physicsObject.Identifier, property.GetName());
         return result;
     }
 
     public override string GetPastedFormulasCode()
     {
         string result = "";
+        Regex formulaRegex = new Regex(@"([a-zA-Z_]+[:=|\s]{2,}[a-zA-Z0-9_\.\+\-\*\/\(\)\:\=]+[\s|:$]*)");
         foreach (Formula formula in Formulas)
-            result += formula.Code + ": ";
+        {
+            MatchCollection collection = formulaRegex.Matches(formula.Code);
+            foreach (Match match in collection)
+            {
+                string temp = match.Groups[1].Value;
+                if (temp.Substring(temp.Length - 1, 1) != ":") temp += ":";
+                result += temp + "\n";
+            }
+        }
 
         return result;
     }
@@ -62,7 +72,7 @@ public class MapleBuilder : AbstractBuilder
         string result = "";
         foreach (PhysicsObject physicsObject in PhysicsObjects)
             foreach (AbstractProperty property in physicsObject.GetProperties())
-                result += string.Format("{0}__{1}__field[counter]:={0}__{1}: ", physicsObject.Identifier, property.GetName());
+                result += string.Format("{0}__{1}__field[counter]:={0}__{1}: \n", physicsObject.Identifier, property.GetName());
         return result;
     }
 
@@ -71,7 +81,7 @@ public class MapleBuilder : AbstractBuilder
         string result = "";
         foreach (PhysicsObject physicsObject in PhysicsObjects)
             foreach (AbstractProperty property in physicsObject.GetProperties())
-                result += string.Format("{0}__{1}__field = seq({0}__{1}__field[i], i=1..calc_count); ", physicsObject.Identifier, property.GetName());
+                result += string.Format("{0}__{1}__field = seq({0}__{1}__field[i], i=1..calc_count); \n", physicsObject.Identifier, property.GetName());
         return result;
     }
 }

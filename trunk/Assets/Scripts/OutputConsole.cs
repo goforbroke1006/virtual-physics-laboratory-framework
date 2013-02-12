@@ -3,7 +3,8 @@ using System.Collections;
 
 public class OutputConsole : MonoBehaviour
 {
-    private Rect _windowPosition = new Rect(10, Screen.height / 4 * 3, Screen.width - 20, Screen.height / 4);
+    private Rect _windowPosition = new Rect(10, Screen.height / 4 * 3, Screen.width - 50, Screen.height / 4);
+    private Vector2 scroll;// = new Vector2(100, 0);
     private string Content = "";
     public bool Visible;
 
@@ -33,14 +34,16 @@ public class OutputConsole : MonoBehaviour
                 4,
                 _windowPosition,
                 DoPhysComponentsManagetWindowPosition,
-                "Console");
+                "Консоль");
         }
     }
 
     void DoPhysComponentsManagetWindowPosition(int id)
     {
+        scroll = GUILayout.BeginScrollView(scroll);
         if (Content.Length > 0)
-            GUI.TextArea(new Rect(10, 30, _windowPosition.width - 20, _windowPosition.height - 40), Content);
+            GUI.TextArea(new Rect(10, 30, _windowPosition.width - 100, _windowPosition.height - 40), Content);
+        GUILayout.EndScrollView();
 
         GUI.DragWindow();
     }
