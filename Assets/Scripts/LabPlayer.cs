@@ -2,10 +2,6 @@ using UnityEngine;
 
 public class LabPlayer : MonoBehaviour
 {
-    //public enum PlayerMode { Web, StdAndEdt }
-
-    //public PlayerMode PlayMode = PlayerMode.Web;
-
     protected bool _isPlay = false;
 
     private WebConnector _webConnector;
@@ -34,50 +30,47 @@ public class LabPlayer : MonoBehaviour
     void OnGUI()
     {
         GUI.BeginGroup(new Rect(Screen.width / 2 - 200, Screen.height - 60, 400, 100));
-        GUI.Box(new Rect(0, 0, 400, 55), "Lab player");
+        GUI.Box(new Rect(0, 0, 400, 55), "Проигрыватель лабораторной работы");
 
-        if (GUI.Button(new Rect(0, 25, 100, 24), "Calculate")) CalculateLab();
+        if (GUI.Button(new Rect(0, 25, 100, 24), "Вычислить")) CalculateLab();
         if (_response.Length > 0)
         {
-            if (GUI.Button(new Rect(100, 25, 100, 24), "Play")) PlayLab();
+            if (GUI.Button(new Rect(100, 25, 100, 24), "Запустить")) PlayLab();
         }
-        else GUI.Box(new Rect(100, 25, 100, 24), "Play");
-        if (GUI.Button(new Rect(200, 25, 100, 24), "Pause")) PauseLab();
-        if (GUI.Button(new Rect(300, 25, 100, 24), "Reset")) ResetLab();
+        else GUI.Box(new Rect(100, 25, 100, 24), "Запустить");
+        if (GUI.Button(new Rect(200, 25, 100, 24), "Пауза")) PauseLab();
+        if (GUI.Button(new Rect(300, 25, 100, 24), "Сброс")) ResetLab();
 
         GUI.EndGroup();
     }
 
     void OnApplicationQuit()
     {
-        //if (PlayMode == PlayerMode.StdAndEdt)
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR
-        MapleCalculator.StopMaple();
-#endif
+        if (Application.platform == RuntimePlatform.WindowsEditor ||
+            Application.platform == RuntimePlatform.WindowsPlayer)
+        {
+            MapleCalculator.StopMaple();
+        }
     }
 
     public void CalculateLab()
     {
         ((OutputConsole)FindObjectOfType(typeof(OutputConsole))).AddMessage("Calculate Lab");
-        //        switch (PlayMode)
-        //        {
-        //            case PlayerMode.Web:
-#if UNITY_WEBPLAYER
-        ((OutputConsole)FindObjectOfType(typeof(OutputConsole))).AddMessage("Web");
-        Debug.Log("UNITY_EDITOR - Calculation");
-        _webConnector.ExternallCall(_mapleBuilder.GetLabworkCode(_currentConfig));
-#endif
-        //                break;
-        //            case PlayerMode.StdAndEdt:
 
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR
-        ((OutputConsole)FindObjectOfType(typeof(OutputConsole))).AddMessage("StdAndEdt");
-        Debug.Log("UNITY_STANDALONE_WIN || UNITY_EDITOR - Calculation");
-        MapleCalculator.Calculate(_mapleBuilder.GetLabworkCode(_currentConfig), this, (OutputConsole)FindObjectOfType(typeof(OutputConsole)));
-#endif
-
-        //                break;
-        //        }
+        if (Application.platform == RuntimePlatform.WindowsWebPlayer)
+        {
+            ((OutputConsole)FindObjectOfType(typeof(OutputConsole))).AddMessage("WindowsWebPlayer");
+            _webConnector.ExternallCall(_mapleBuilder.GetLabworkCode(_currentConfig));
+        }
+        else if (Application.platform == RuntimePlatform.WindowsEditor || 
+            Application.platform == RuntimePlatform.WindowsPlayer)
+        {
+            ((OutputConsole)FindObjectOfType(typeof(OutputConsole))).AddMessage("WindowsEditor || WindowsPlayer");
+            MapleCalculator.Calculate(_mapleBuilder.GetLabworkCode(
+                _currentConfig), 
+                this,
+                (OutputConsole)FindObjectOfType(typeof(OutputConsole)));
+        }
     }
 
     protected void PlayLab()

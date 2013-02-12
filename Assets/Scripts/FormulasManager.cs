@@ -16,15 +16,15 @@ public class FormulasManager : MonoBehaviour
             1,
             _windowPosition,
             DoPhysComponentsManagetWindowPosition,
-            "Behaviors");
+            "Формулы");
     }
 
     void DoPhysComponentsManagetWindowPosition(int id)
     {
         if (_currentFormula != null)
-            GUI.Label(new Rect(10, 30, _windowPosition.width - 20, 24), "Current user script: " + _currentFormula.Name);
+            GUI.Label(new Rect(10, 30, _windowPosition.width - 20, 24), "Текущий элемент: " + _currentFormula.Name);
         else
-            GUI.Label(new Rect(10, 30, _windowPosition.width - 20, 24), "Current user script: ");
+            GUI.Label(new Rect(10, 30, _windowPosition.width - 20, 24), "Текущий элемент: ");
 
         if (GetFormulas() != null)
         {
