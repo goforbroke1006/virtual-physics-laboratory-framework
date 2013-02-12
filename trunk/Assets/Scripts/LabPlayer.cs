@@ -51,18 +51,21 @@ public class LabPlayer : MonoBehaviour
     void OnApplicationQuit()
     {
         //if (PlayMode == PlayerMode.StdAndEdt)
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
         MapleCalculator.StopMaple();
+#endif
     }
 
     public void CalculateLab()
     {
+        ((OutputConsole)FindObjectOfType(typeof(OutputConsole))).AddMessage("Calculate Lab");
         //        switch (PlayMode)
         //        {
         //            case PlayerMode.Web:
 #if UNITY_WEBPLAYER
-                ((OutputConsole)FindObjectOfType(typeof(OutputConsole))).AddMessage("Web");
-                Debug.Log("UNITY_EDITOR - Calculation");
-                _webConnector.ExternallCall(_mapleBuilder.GetLabworkCode(_currentConfig));
+        ((OutputConsole)FindObjectOfType(typeof(OutputConsole))).AddMessage("Web");
+        Debug.Log("UNITY_EDITOR - Calculation");
+        _webConnector.ExternallCall(_mapleBuilder.GetLabworkCode(_currentConfig));
 #endif
         //                break;
         //            case PlayerMode.StdAndEdt:

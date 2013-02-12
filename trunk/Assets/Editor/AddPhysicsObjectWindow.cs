@@ -14,7 +14,7 @@ public class AddPhysicsObjectWindow : EditorWindow
 
     private string idError;
 
-    [MenuItem("Window/Add physics object")]
+    [MenuItem("Window/Добавление физических объектов")]
     public static void ShowWindow()
     {
         var window = EditorWindow.GetWindow(typeof (AddPhysicsObjectWindow));
@@ -23,15 +23,10 @@ public class AddPhysicsObjectWindow : EditorWindow
 
     private void OnGUI()
     {
-        GUILayout.Label("Add physics object settings", EditorStyles.boldLabel);
+        GUILayout.Label("Опции добавления объектов", EditorStyles.boldLabel);
         GUILayout.Space(10);
 
-        /*GUILayout.BeginHorizontal();
-        GUILayout.Label("Identifier");
-        _identifier = GUILayout.TextField(_identifier);
-        GUILayout.EndHorizontal();*/
-
-        _identifier = EditorGUILayout.TextField("Identifier", _identifier);
+        _identifier = EditorGUILayout.TextField("Идентификатор", _identifier);
 
         idError = EditorPhysObjNameValidator.Validate(_identifier);
         if (idError.Length > 0)
@@ -45,11 +40,11 @@ public class AddPhysicsObjectWindow : EditorWindow
         }
         EditorGUILayout.EndScrollView();
 
-        GUILayout.Label("Selected: " + selectedPhysObj, EditorStyles.boldLabel);
+        GUILayout.Label("Выбран: " + selectedPhysObj, EditorStyles.boldLabel);
 
         if (selectedPhysObj.Length > 0 && idError.Length == 0)
         {
-            if (GUILayout.Button("Add"))
+            if (GUILayout.Button("Добавить"))
             {
                 AvailPhysObjsRepository.Get().CreatePhysObjectByPrefabName(selectedPhysObj, _identifier);
                 _identifier = String.Empty;
@@ -70,11 +65,11 @@ public class AddPhysicsObjectWindow : EditorWindow
              if (!onlyLettersRegex.IsMatch(name))
              {
                  if (new Regex(@"\d").IsMatch(name))
-                     error = "Numbers is not available.";
+                     error = "Использование чисел недопустимо.";
                  else if (new Regex(@"_").IsMatch(name))
-                     error = "Underscore is not available.";
+                     error = "Символ '_'(нижн.подчеркивание) не допустим.";
                  else
-                     error = "Use only 'a-z' and 'A-Z' (not 'space', underscore and special symbols).";
+                     error = "Используйте только символы 'a-z' и 'A-Z' (недопустимы ' '(пробел), '_'(нижн.подчеркивание) и спец.символы).";
              }
 
              return error;
