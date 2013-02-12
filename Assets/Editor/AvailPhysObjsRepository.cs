@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 public class AvailPhysObjsRepository
 {
-    private const string PATH_TO_PREFABS_FOLDER = "Assets/Environment/PhysicsObject/";
+    private const string PATH_TO_PREFABS_FOLDER = "Assets/LabTools/Prefabs";
     private readonly List<string> _physObjects = new List<string>();
 
     private AvailPhysObjsRepository()
@@ -35,7 +32,7 @@ public class AvailPhysObjsRepository
 
     public void CreatePhysObjectByPrefabName(string name, string id)
     {
-        string path = string.Format("Assets/Environment/PhysicsObject/{0}.prefab", name);
+        string path = string.Format("{0}/{1}.prefab", PATH_TO_PREFABS_FOLDER, name);
         GameObject gameObj = (GameObject)Object.Instantiate(AssetDatabase.LoadAssetAtPath(path, typeof(GameObject)));
         gameObj.GetComponent<PhysicsObject>().Identifier = id;
     }

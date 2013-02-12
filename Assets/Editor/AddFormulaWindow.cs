@@ -19,13 +19,13 @@ public class AddFormulaWindow : EditorWindow
 
     private void OnGUI()
     {
-        GUILayout.Label("Управление добавлением формул", EditorStyles.boldLabel);
+        GUILayout.Label("Опции добавления формул", EditorStyles.boldLabel);
         GUILayout.Space(10);
 
-        _name = EditorGUILayout.TextField("Name", _name);
+        _name = EditorGUILayout.TextField("Название", _name);
 
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Code");
+        GUILayout.Label("Формула");
         _code = EditorGUILayout.TextArea(_code, GUILayout.MinWidth(300));
         GUILayout.EndHorizontal();
 
