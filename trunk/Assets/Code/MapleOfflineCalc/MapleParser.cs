@@ -77,7 +77,7 @@ public class MapleParser : AbstractParser
             foreach (PhysicsObject physObject in PhysicsObjectsManager.GetPhysicsObjects())
                 if (physObject.Identifier == identifier)
                 {
-                    AbstractProperty property = physObject.GetProperty(propertyName);
+                    PhysicsProperty property = physObject.GetProperty(propertyName);
                     if (property != null)
                         property.SetValue(propertyValue);
                 }

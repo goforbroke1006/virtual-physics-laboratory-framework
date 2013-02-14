@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+	<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+	<ProductVersion>10.0.20506</ProductVersion>
+	<SchemaVersion>2.0</SchemaVersion>
+	<ProjectGuid>{6CC4F6BF-D918-F274-BA36-78A036BF7FD7}</ProjectGuid>
+	<OutputType>Library</OutputType>
+	<AppDesignerFolder>Properties</AppDesignerFolder>
+	<RootNamespace></RootNamespace>
+	<AssemblyName>Assembly-CSharp</AssemblyName>
+	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+	<FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	<DebugSymbols>true</DebugSymbols>
+	<DebugType>full</DebugType>
+	<Optimize>false</Optimize>
+	<OutputPath>Temp\bin\Debug\</OutputPath>
+	<DefineConstants>DEBUG;TRACE;UNITY_3_5_6;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_WIN;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_WEBCAM;ENABLE_MICROPHONE;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;ENABLE_SUBSTANCE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	<DebugType>pdbonly</DebugType>
+	<Optimize>true</Optimize>
+	<OutputPath>Temp\bin\Release\</OutputPath>
+	<DefineConstants>TRACE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+	<Reference Include="System" />
+    <Reference Include="System.XML" />
+	<Reference Include="System.Core" />
+	<Reference Include="UnityEngine">
+	  <HintPath>D:/ProgramFiles/Unity 3.5.6f4/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	</Reference>
+	<Reference Include="UnityEditor">
+	  <HintPath>D:/ProgramFiles/Unity 3.5.6f4/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	</Reference>
+  </ItemGroup>
+  <ItemGroup>
+     <Compile Include="Assets\Code\AbstractBuilder.cs" />
+     <Compile Include="Assets\Code\AbstractParser.cs" />
+     <Compile Include="Assets\Code\LabWorkConfig.cs" />
+     <Compile Include="Assets\Code\MapleOfflineCalc\Desktop\MapleCalculator.cs" />
+     <Compile Include="Assets\Code\MapleOfflineCalc\Desktop\MapleEngine.cs" />
+     <Compile Include="Assets\Code\MapleOfflineCalc\MapleBuilder.cs" />
+     <Compile Include="Assets\Code\MapleOfflineCalc\MapleParser.cs" />
+     <Compile Include="Assets\Code\Wellocity\WellocityEngine.cs" />
+     <Compile Include="Assets\LabTools\Properties\PosX.cs" />
+     <Compile Include="Assets\LabTools\Properties\PosY.cs" />
+     <Compile Include="Assets\LabTools\Properties\PosZ.cs" />
+     <Compile Include="Assets\LabTools\Properties\Radius.cs" />
+     <Compile Include="Assets\LabTools\Properties\RotX.cs" />
+     <Compile Include="Assets\LabTools\Properties\RotY.cs" />
+     <Compile Include="Assets\LabTools\Properties\RotZ.cs" />
+     <Compile Include="Assets\LabTools\Properties\SizeX.cs" />
+     <Compile Include="Assets\LabTools\Properties\SizeY.cs" />
+     <Compile Include="Assets\LabTools\Properties\SizeZ.cs" />
+     <Compile Include="Assets\Scripts\Formula.cs" />
+     <Compile Include="Assets\Scripts\FormulasManager.cs" />
+     <Compile Include="Assets\Scripts\LabPlayer.cs" />
+     <Compile Include="Assets\Scripts\LabworkConfigurationManager.cs" />
+     <Compile Include="Assets\Scripts\MatematicsModelView.cs" />
+     <Compile Include="Assets\Scripts\OutputConsole.cs" />
+     <Compile Include="Assets\Scripts\PhysicsObject.cs" />
+     <Compile Include="Assets\Scripts\PhysicsObjectsManager.cs" />
+     <Compile Include="Assets\Scripts\PhysicsProperty.cs" />
+     <Compile Include="Assets\Scripts\WebConnector.cs" />
+     <None Include="Assets\Resources\Codes\template_1.txt" />
+     <None Include="Assets\Resources\Codes\startup_1.txt" />
+     <None Include="Assets\Resources\Codes\new  2.txt" />
+     <None Include="Assets\Resources\Regexes for labwork.txt" />
+     <None Include="Assets\Resources\Test - Maple response.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	   Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  
+</Project>

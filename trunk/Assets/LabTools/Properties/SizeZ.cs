@@ -1,25 +1,25 @@
-﻿using System.Globalization;
+using System.Globalization;
 using UnityEngine;
 
 [AddComponentMenu("VPL Properties/Native/Scale Z")]
-public class ScaleX : AbstractProperty
+public class SizeZ : PhysicsProperty
 {
     public override string GetName()
     {
-        return "ScaleX";
+        return "SizeZ";
     }
 
     public override string GetValue()
     {
-        return transform.localScale.x.ToString(CultureInfo.InvariantCulture);
+        return transform.localScale.z.ToString(CultureInfo.InvariantCulture);
     }
 
     public override void SetValue(string val)
     {
         transform.localScale = new Vector3(
-            float.Parse(val),
+            transform.rotation.x,
             transform.rotation.y,
-            transform.rotation.z
+            float.Parse(val)
             );
     }
 }

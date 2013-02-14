@@ -2,11 +2,11 @@
 using UnityEngine;
 
 [AddComponentMenu("VPL Properties/Native/Rotation X")]
-public class RotationX : AbstractProperty
+public class RotX : PhysicsProperty
 {
     public override string GetName()
     {
-        return "RotatX";
+        return "RotX";
     }
 
     public override string GetValue()

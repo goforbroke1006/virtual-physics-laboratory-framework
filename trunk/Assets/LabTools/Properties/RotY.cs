@@ -1,25 +1,25 @@
 ﻿using System.Globalization;
 using UnityEngine;
 
-[AddComponentMenu("VPL Properties/Native/Rotation Z")]
-public class RotationZ : AbstractProperty
+[AddComponentMenu("VPL Properties/Native/Rotation Y")]
+public class RotY : PhysicsProperty
 {
     public override string GetName()
     {
-        return "RotatZ";
+        return "RotY";
     }
 
     public override string GetValue()
     {
-        return transform.rotation.z.ToString(CultureInfo.InvariantCulture);
+        return transform.rotation.y.ToString(CultureInfo.InvariantCulture);
     }
 
     public override void SetValue(string val)
     {
         transform.rotation = new Quaternion(
             transform.rotation.x,
-            transform.rotation.y,
             float.Parse(val),
+            transform.rotation.z,
             transform.rotation.w
             );
     }

@@ -62,6 +62,9 @@ public class PhysicsObjectsManager : MonoBehaviour
     {
         _currentPhysicsObject = physicsObject;
 
+        ((MatematicsModelView) FindObjectOfType(typeof (MatematicsModelView))).CurrentPhysicsObject =
+            _currentPhysicsObject;
+
         Debug.Log(string.Format(
             "{0} - SetCurrentComponent => Set new current component with name <{1}> ",
             this.GetType(),
