@@ -35,7 +35,7 @@ public class MapleBuilder : AbstractBuilder
     {
         string result = "";
         foreach (PhysicsObject physicsObject in PhysicsObjects)
-            foreach (AbstractProperty property in physicsObject.GetProperties())
+            foreach (PhysicsProperty property in physicsObject.GetProperties())
                 result += string.Format("{0}__{1}:={2}: \n", physicsObject.Identifier, property.GetName(), property.GetValue());
         return result;
     }
@@ -44,7 +44,7 @@ public class MapleBuilder : AbstractBuilder
     {
         string result = "";
         foreach (PhysicsObject physicsObject in PhysicsObjects)
-            foreach (AbstractProperty property in physicsObject.GetProperties())
+            foreach (PhysicsProperty property in physicsObject.GetProperties())
                 result += string.Format("{0}__{1}__field(1..calc_count): \n", physicsObject.Identifier, property.GetName());
         return result;
     }
@@ -71,7 +71,7 @@ public class MapleBuilder : AbstractBuilder
     {
         string result = "";
         foreach (PhysicsObject physicsObject in PhysicsObjects)
-            foreach (AbstractProperty property in physicsObject.GetProperties())
+            foreach (PhysicsProperty property in physicsObject.GetProperties())
                 result += string.Format("{0}__{1}__field[counter]:={0}__{1}: \n", physicsObject.Identifier, property.GetName());
         return result;
     }
@@ -80,7 +80,7 @@ public class MapleBuilder : AbstractBuilder
     {
         string result = "";
         foreach (PhysicsObject physicsObject in PhysicsObjects)
-            foreach (AbstractProperty property in physicsObject.GetProperties())
+            foreach (PhysicsProperty property in physicsObject.GetProperties())
                 result += string.Format("{0}__{1}__field = seq({0}__{1}__field[i], i=1..calc_count); \n", physicsObject.Identifier, property.GetName());
         return result;
     }

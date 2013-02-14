@@ -1,26 +1,27 @@
+using System;
 using System.Globalization;
 using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("VPL Properties/Native/Position Z")]
-public class PositionZ : AbstractProperty
+[AddComponentMenu("VPL Properties/Native/Position X")]
+public class PosX : PhysicsProperty
 {
     public override string GetName()
     {
-        return "PosZ";
+        return "PosX";
     }
 
     public override string GetValue()
     {
-        return transform.position.z.ToString(CultureInfo.InvariantCulture);
+        return transform.position.x.ToString(CultureInfo.InvariantCulture);
     }
 
     public override void SetValue(string val)
     {
         transform.position = new Vector3(
-            transform.position.x,
+            float.Parse(val),
             transform.position.y,
-            float.Parse(val)
+            transform.position.z
             );
     }
 }

@@ -20,15 +20,15 @@ public class PhysicsObject : MonoBehaviour
 
     }
 
-    public List<AbstractProperty> GetProperties()
+    public List<PhysicsProperty> GetProperties()
     {
-        return GetComponents<AbstractProperty>().OfType<AbstractProperty>().ToList();
+        return GetComponents<PhysicsProperty>().OfType<PhysicsProperty>().ToList();
     }
 
-    public AbstractProperty GetProperty(string name)
+    public PhysicsProperty GetProperty(string name)
     {
-        List<AbstractProperty> list = GetProperties();
-        foreach (AbstractProperty property in list)
+        List<PhysicsProperty> list = GetProperties();
+        foreach (PhysicsProperty property in list)
         {
             if (property.GetName() == name)
                 return property;
