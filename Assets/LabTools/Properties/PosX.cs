@@ -1,9 +1,11 @@
 using System;
 using System.Globalization;
+using UnityEditor;
 using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("VPL Properties/Native/Position X")]
+//[AddComponentMenu("VPL Properties/Position X")]
+[AddComponentMenu("Физ.свойства (основные)/Координаты X")]
 public class PosX : PhysicsProperty
 {
     public override string GetName()

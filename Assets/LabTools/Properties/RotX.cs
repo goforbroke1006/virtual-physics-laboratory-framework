@@ -1,7 +1,8 @@
 ﻿using System.Globalization;
 using UnityEngine;
 
-[AddComponentMenu("VPL Properties/Native/Rotation X")]
+//[AddComponentMenu("VPL Properties/Native/Rotation X")]
+[AddComponentMenu("Физ.свойства (основные)/Поворот X")]
 public class RotX : PhysicsProperty
 {
     public override string GetName()

@@ -1,7 +1,8 @@
 ﻿using System.Globalization;
 using UnityEngine;
 
-[AddComponentMenu("VPL Properties/Native/Scale Z")]
+//[AddComponentMenu("VPL Properties/Size X")]
+[AddComponentMenu("Физ.свойства (основные)/Размер X")]
 public class SizeX : PhysicsProperty
 {
     public override string GetName()

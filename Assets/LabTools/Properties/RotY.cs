@@ -1,7 +1,8 @@
 ﻿using System.Globalization;
 using UnityEngine;
 
-[AddComponentMenu("VPL Properties/Native/Rotation Y")]
+//[AddComponentMenu("VPL Properties/Native/Rotation Y")]
+[AddComponentMenu("Физ.свойства (основные)/Поворот Y")]
 public class RotY : PhysicsProperty
 {
     public override string GetName()

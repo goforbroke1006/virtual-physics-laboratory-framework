@@ -1,7 +1,8 @@
 ﻿using System.Globalization;
 using UnityEngine;
 
-[AddComponentMenu("VPL Properties/Native/Rotation Z")]
+//[AddComponentMenu("VPL Properties/Native/Rotation Z")]
+[AddComponentMenu("Физ.свойства (основные)/Поворот Z")]
 public class RotZ : PhysicsProperty
 {
     public override string GetName()
