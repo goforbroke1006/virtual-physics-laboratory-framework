@@ -2,7 +2,7 @@ using UnityEngine;
 
 //[AddComponentMenu("VPL Properties/Velocity Z")]
 [AddComponentMenu("Физ.свойства (дополнительные)/Скорость Z")]
-public class VelocityZ : PhysicsProperty
+public class VelocityZ : BasicPhysicsProperty
 {
     public override string GetName()
     {
