@@ -2,7 +2,8 @@ using System.Globalization;
 using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("VPL Properties/Native/Position Z")]
+//[AddComponentMenu("VPL Properties/Position Z")]
+[AddComponentMenu("Физ.свойства (основные)/Координаты Z")]
 public class PosZ : PhysicsProperty
 {
     public override string GetName()

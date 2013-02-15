@@ -2,7 +2,8 @@ using System;
 using System.Globalization;
 using UnityEngine;
 
-[AddComponentMenu("VPL Properties/Native/Radius")]
+//[AddComponentMenu("VPL Properties/Native/Radius")]
+[AddComponentMenu("Физ.свойства (дополнительные)/Радиус")]
 public class Radius : PhysicsProperty
 {
     public enum OrientationEnum
@@ -17,37 +18,23 @@ public class Radius : PhysicsProperty
         return "Radius";
     }
 
-    public override string GetValue()
-    {
-        switch (CurrentOrientation)
-        {
-            case OrientationEnum.XY:
-                return Convert.ToString((transform.localScale.x + transform.localScale.y) / 2);
-            case OrientationEnum.XZ:
-                return Convert.ToString((transform.localScale.x + transform.localScale.z) / 2);
-            case OrientationEnum.YZ:
-                return Convert.ToString((transform.localScale.y + transform.localScale.z) / 2);
-            case OrientationEnum.XYZ:
-                return Convert.ToString((transform.localScale.x + transform.localScale.y + transform.localScale.z) / 2);
-        }
-        return "0";
-    }
-
     public override void SetValue(string val)
     {
+        base.SetValue(val);
+
         switch (CurrentOrientation)
         {
             case OrientationEnum.XY:
-                transform.localScale = new Vector3(float.Parse(val), float.Parse(val), transform.rotation.z);
+                transform.localScale = new Vector3(float.Parse(GetValue()), float.Parse(GetValue()), transform.localScale.z);
                 break;
             case OrientationEnum.XZ:
-                transform.localScale = new Vector3(float.Parse(val), transform.rotation.y, float.Parse(val));
+                transform.localScale = new Vector3(float.Parse(GetValue()), transform.localScale.y, float.Parse(GetValue()));
                 break;
             case OrientationEnum.YZ:
-                transform.localScale = new Vector3(transform.rotation.x, float.Parse(val), float.Parse(val));
+                transform.localScale = new Vector3(transform.localScale.x, float.Parse(GetValue()), float.Parse(GetValue()));
                 break;
             case OrientationEnum.XYZ:
-                transform.localScale = new Vector3(float.Parse(val), float.Parse(val), float.Parse(val));
+                transform.localScale = new Vector3(float.Parse(GetValue()), float.Parse(GetValue()), float.Parse(GetValue()));
                 break;
         }
         

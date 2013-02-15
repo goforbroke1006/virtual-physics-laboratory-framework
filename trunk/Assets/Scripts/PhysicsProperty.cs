@@ -1,20 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEditor;
 using UnityEngine;
 using Object = System.Object;
 
 public class PhysicsProperty : MonoBehaviour
 {
-    public string CurrentValue;
+    public string CurrentValue { get; set; }
 
     public enum EditModeEnum
     {
-        Static,
+        Const,
         MouseMode,
         SetValueMode
     }
-    public EditModeEnum EditMode = EditModeEnum.MouseMode;
+    public EditModeEnum EditMode = EditModeEnum.Const;
 
     public virtual string GetName()
     {
