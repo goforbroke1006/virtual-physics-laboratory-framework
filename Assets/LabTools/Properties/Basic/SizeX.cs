@@ -3,7 +3,7 @@ using UnityEngine;
 
 //[AddComponentMenu("VPL Properties/Size X")]
 [AddComponentMenu("Физ.свойства (основные)/Размер X")]
-public class SizeX : PhysicsProperty
+public class SizeX : BasicPhysicsProperty
 {
     public override string GetName()
     {

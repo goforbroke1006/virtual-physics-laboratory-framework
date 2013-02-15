@@ -4,7 +4,7 @@ using UnityEngine;
 
 //[AddComponentMenu("VPL Properties/Native/Radius")]
 [AddComponentMenu("Физ.свойства (дополнительные)/Радиус")]
-public class Radius : PhysicsProperty
+public class Radius : BasicPhysicsProperty
 {
     public enum OrientationEnum
     {
@@ -16,6 +16,18 @@ public class Radius : PhysicsProperty
     public override string GetName()
     {
         return "Radius";
+    }
+
+    public override string GetValue()
+    {
+        switch (CurrentOrientation)
+        {
+            case OrientationEnum.XY: return transform.localScale.x.ToString(CultureInfo.InvariantCulture);
+            case OrientationEnum.XZ: return transform.localScale.x.ToString(CultureInfo.InvariantCulture);
+            case OrientationEnum.YZ: return transform.localScale.y.ToString(CultureInfo.InvariantCulture);
+            case OrientationEnum.XYZ: return transform.localScale.x.ToString(CultureInfo.InvariantCulture);
+        }
+        return "1";
     }
 
     public override void SetValue(string val)

@@ -3,7 +3,7 @@ using UnityEngine;
 
 //[AddComponentMenu("VPL Properties/Native/Size Z")]
 [AddComponentMenu("Физ.свойства (основные)/Размер Z")]
-public class SizeZ : PhysicsProperty
+public class SizeZ : BasicPhysicsProperty
 {
     public override string GetName()
     {

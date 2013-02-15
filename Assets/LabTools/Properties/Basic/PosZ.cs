@@ -4,7 +4,7 @@ using System.Collections;
 
 //[AddComponentMenu("VPL Properties/Position Z")]
 [AddComponentMenu("Физ.свойства (основные)/Координаты Z")]
-public class PosZ : PhysicsProperty
+public class PosZ : BasicPhysicsProperty
 {
     public override string GetName()
     {

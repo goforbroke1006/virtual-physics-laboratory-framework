@@ -6,7 +6,7 @@ using System.Collections;
 
 //[AddComponentMenu("VPL Properties/Position X")]
 [AddComponentMenu("Физ.свойства (основные)/Координаты X")]
-public class PosX : PhysicsProperty
+public class PosX : BasicPhysicsProperty
 {
     public override string GetName()
     {
