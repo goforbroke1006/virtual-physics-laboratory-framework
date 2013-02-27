@@ -20,15 +20,15 @@ public class PhysicsObject : MonoBehaviour
 
     }
 
-    public List<PhysicsProperty> GetProperties()
+    public List<BasicPhysicsProperty> GetProperties()
     {
-        return GetComponents<PhysicsProperty>().OfType<PhysicsProperty>().ToList();
+        return GetComponents<BasicPhysicsProperty>().OfType<BasicPhysicsProperty>().ToList();
     }
 
-    public PhysicsProperty GetProperty(string name)
+    public BasicPhysicsProperty GetProperty(string name)
     {
-        List<PhysicsProperty> list = GetProperties();
-        foreach (PhysicsProperty property in list)
+        List<BasicPhysicsProperty> list = GetProperties();
+        foreach (BasicPhysicsProperty property in list)
         {
             if (property.GetName() == name)
                 return property;
@@ -47,7 +47,7 @@ public class PhysicsObject : MonoBehaviour
     {
         try
         {
-            ((PhysicsObjectsManager)FindObjectOfType(typeof(PhysicsObjectsManager))).SetCurrentComponent(this);
+            ((PhysicsObjectsManager)FindObjectOfType(typeof(PhysicsObjectsManager))).SetCurrentObject(this);
         }
         catch (Exception exception)
         {

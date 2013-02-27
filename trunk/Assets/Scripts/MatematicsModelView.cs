@@ -32,7 +32,7 @@ public class MatematicsModelView : MonoBehaviour
         _scrollViewVector = GUI.BeginScrollView(new Rect(10, 10, _windowPosition.width - 20, _windowPosition.height - 20), _scrollViewVector, new Rect(0, 0, 160, 400));
         int index = 0;
         if (CurrentPhysicsObject != null)
-        foreach (PhysicsProperty property in CurrentPhysicsObject.GetProperties())
+        foreach (BasicPhysicsProperty property in CurrentPhysicsObject.GetProperties())
         {
             GUI.Label(new Rect(5, 24 * index, 100, 24), property.GetName());
             property.SetValue(GUI.TextField(new Rect(110, 24 * index, 80, 24), property.GetValue()));

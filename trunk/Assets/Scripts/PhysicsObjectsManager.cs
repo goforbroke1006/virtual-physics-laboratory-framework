@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine;
 public class PhysicsObjectsManager : MonoBehaviour
 {
     public Texture InfoTexture;
+    public Material LineMaterial;
 
     private PhysicsObject _currentPhysicsObject;
 
@@ -17,6 +19,73 @@ public class PhysicsObjectsManager : MonoBehaviour
             _windowPosition,
             DoPhysComponentsManagetWindowPosition,
             "Физические объекты");
+
+        draw();
+    }
+
+    //void OnDrawGizmos()
+    //{
+    //    try
+    //    {
+    //        Gizmos.color = new Color(0f, 0f, 0f);
+    //        PhysicsObject po = GetCurrectObject();
+    //        Gizmos.DrawLine(po.transform.position, po.transform.position + new Vector3(100, 0, 0));
+    //        Gizmos.DrawLine(po.transform.position, po.transform.position + new Vector3(0, 100, 0));
+    //        Gizmos.DrawLine(po.transform.position, po.transform.position + new Vector3(0, 0, 100));
+
+    //        //Handle.
+    //    }
+    //    catch (Exception exception)
+    //    {
+    //        Debug.LogWarning(exception.Message);
+    //    }
+    //}
+
+    void draw()
+    {
+        PhysicsObject po = GetCurrectObject();
+
+        //GL.PushMatrix();
+        //LineMaterial.SetPass(0);
+        //GL.LoadOrtho();
+        //GL.Begin(GL.LINES);
+        //GL.Color(Color.red);
+        //GL.Vertex(po.transform.position);
+        //GL.Vertex(po.transform.position + new Vector3(100, 0, 0));
+        //GL.End();
+        //GL.PopMatrix();
+
+        if (po != null)
+        {
+            LineMaterial.SetPass(0);
+            GL.Begin(GL.LINES);
+
+            GL.Color(new Color(1f, 0f, 0f));
+            GL.Vertex3(po.transform.position.x, po.transform.position.y, po.transform.position.z);
+            GL.Vertex3(po.transform.position.x + 1, po.transform.position.y, po.transform.position.z);
+            GL.End();
+
+            GL.Color(new Color(0f, 1f, 0f));
+            GL.Vertex3(po.transform.position.x, po.transform.position.y, po.transform.position.z);
+            GL.Vertex3(po.transform.position.x, po.transform.position.y+1, po.transform.position.z);
+            GL.End();
+
+            GL.Color(new Color(0f, 0f, 1f));
+            GL.Vertex3(po.transform.position.x, po.transform.position.y, po.transform.position.z);
+            GL.Vertex3(po.transform.position.x, po.transform.position.y, po.transform.position.z+1);
+            GL.End();
+
+            //GL.Vertex3(0, 0, 0);
+            //GL.Vertex3(1, 0, 0);
+            //GL.Vertex3(0, 1, 0);
+            //GL.Vertex3(1, 1, 0);
+            //GL.Color(new Color(0f, 0f, 0f, 0.5f));
+            //GL.Vertex3(0, 0, 0);
+            //GL.Vertex3(0, 1, 0);
+            //GL.Vertex3(1, 0, 0);
+            //GL.Vertex3(1, 1, 0);
+            //GL.End();
+        }
     }
 
     void DoPhysComponentsManagetWindowPosition(int id)
@@ -33,7 +102,7 @@ public class PhysicsObjectsManager : MonoBehaviour
             foreach (PhysicsObject component in GetPhysicsObjects())
             {
                 if (GUI.Button(new Rect(0, counter * 24, _windowPosition.width - 20, 24), component.Identifier))
-                    this.SetCurrentComponent(component);
+                    this.SetCurrentObject(component);
                 counter++;
             }
             GUI.EndScrollView();
@@ -58,7 +127,12 @@ public class PhysicsObjectsManager : MonoBehaviour
         GUI.DragWindow();
     }
 
-    public void SetCurrentComponent(PhysicsObject physicsObject)
+    public PhysicsObject GetCurrectObject()
+    {
+        return this._currentPhysicsObject;
+    }
+
+    public void SetCurrentObject(PhysicsObject physicsObject)
     {
         _currentPhysicsObject = physicsObject;
 
@@ -66,7 +140,7 @@ public class PhysicsObjectsManager : MonoBehaviour
             _currentPhysicsObject;
 
         Debug.Log(string.Format(
-            "{0} - SetCurrentComponent => Set new current component with name <{1}> ",
+            "{0} - SetCurrentObject => Set new current component with name <{1}> ",
             this.GetType(),
             physicsObject.Identifier
             ));
