@@ -5,11 +5,11 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{3E053F39-1D1D-7481-7EFC-39E0871BB4D2}</ProjectGuid>
+	<ProjectGuid>{0D113A2F-BD9A-1DE9-F96A-4A72BDE36494}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
-	<AssemblyName>Assembly-CSharp-Editor</AssemblyName>
+	<AssemblyName>Assembly-CSharp-firstpass</AssemblyName>
 	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
 	<FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -44,19 +44,12 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Editor\AddFormulaWindow.cs" />
-     <Compile Include="Assets\Editor\AddPhysicsObjectWindow.cs" />
-     <Compile Include="Assets\Editor\AvailPhysObjsRepository.cs" />
-     <Compile Include="Assets\Editor\PhysicsObjectInspector.cs" />
+     <Compile Include="Assets\Standard Assets\Character Controllers\Sources\Scripts\MouseLook.cs" />
      <None Include="Assets\Resources\Codes\template_1.txt" />
      <None Include="Assets\Resources\Codes\startup_1.txt" />
      <None Include="Assets\Resources\Codes\new  2.txt" />
      <None Include="Assets\Resources\Regexes for labwork.txt" />
      <None Include="Assets\Resources\Test - Maple response.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{6CC4F6BF-D918-F274-BA36-78A036BF7FD7}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
