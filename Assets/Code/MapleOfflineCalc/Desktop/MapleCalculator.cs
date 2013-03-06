@@ -21,27 +21,36 @@ class MapleCalculator
             StartMaple();
     }
 
-    private static List<string> expressions;
-    private static Regex _codeItemRegex = new Regex(@"(print\(\'endl\'\)\;)|([a-zA-Z_]+\s=\sseq\([\w_\[\]\(\)\,\.\=\s]+[;$])|(while[a-zA-Z0-9\s_.,\+\-\*\/\[\]\(\)\=\<\>\:]+end:)|([a-zA-Z_]+:=[a-zA-Z0-9\s_.,\+\-\*\/\[\]\(\)]+[:$])");
-    private static int counter = 0;
-    private static string Result = "";
+    private static List<String> _expressions;
+    private static readonly Regex CodeItemRegex = new Regex(@"(print\(\'endl\'\)\;)|([a-zA-Z_]+\s=\sseq\([\w_\[\]\(\)\,\.\=\s]+[;$])|(while[a-zA-Z0-9\s_.,\+\-\*\/\[\]\(\)\=\<\>\:]+end:)|([a-zA-Z_]+:=[a-zA-Z0-9\s_.,\+\-\*\/\[\]\(\)]+[:$])");
+    private static int _counter = 0;
+    private static String _finalResult = "";
 
-    public static void Calculate(string code, LabPlayer labPlayer, OutputConsole console)
+    public static void Calculate(String code, LabPlayer labPlayer, OutputConsole console)
     {
         _labPlayer = labPlayer;
         _console = console;
-
-        _console.AddMessage("MapleCalculator - Calculate - Code for calculating: \n" + code);
+        //_console.AddMessage("MapleCalculator - Calculate - Code for calculating: \n" + code);
 
         if (!_started)
             StartMaple();
-        expressions = GetExpressionsList(code);
+        _expressions = GetExpressionsList(code);
         int attemps = 0;
         NextCalc();
         while (true)
         {
-            if (_returnResult) { _console.AddMessage("Result: \n" + Result); _labPlayer.SetResponse(Result); break;}
-            if (tempResult.Length > 0) { Result += tempResult; tempResult = ""; NextCalc(); }
+            if (_returnResult)
+            {
+                _console.AddMessage("FinalResult: \n" + _finalResult); 
+                _labPlayer.SetResponse(_finalResult); break;
+            }
+            if (tempResult.Length > 0)
+            {
+                _finalResult += tempResult;
+                //_console.AddMessage("Temp RESULT length = " + tempResult.Length);
+                //_console.AddMessage("Final RESULT length = " + _finalResult.Length);
+                tempResult = ""; NextCalc();
+            }
             if (attemps >= 20) { NextCalc(); attemps = 0; }
 
             Thread.Sleep(50);
@@ -51,23 +60,23 @@ class MapleCalculator
 
     private static void NextCalc()
     {
-        if (expressions[counter] != null)
+        if (_expressions[_counter] != null)
         {
-            counter++;
-            IntPtr val = MapleEngine.EvalMapleStatement(_kv, Encoding.ASCII.GetBytes(expressions[counter - 1]));
+            _counter++;
+            IntPtr val = MapleEngine.EvalMapleStatement(_kv, Encoding.ASCII.GetBytes(_expressions[_counter - 1]));
             if (MapleEngine.IsMapleStop(_kv, val).ToInt32() != 0)
                 _returnResult = true; //return;
         }
         else _returnResult = true;
     }
 
-    private static List<string> GetExpressionsList(string code)
+    private static List<String> GetExpressionsList(String code)
     {
-        List<string> list = new List<string>();
-        MatchCollection collection = _codeItemRegex.Matches(code);
+        List<String> list = new List<String>();
+        MatchCollection collection = CodeItemRegex.Matches(code);
         foreach (Match match in collection)
         {
-            string temp = "print('null')";
+            String temp = "print('null')";
             if (match.Groups[1].Value.Length > 0) temp = match.Groups[1].Value;
             else if (match.Groups[2].Value.Length > 0) temp = match.Groups[2].Value;
             else if (match.Groups[3].Value.Length > 0) temp = match.Groups[3].Value;
@@ -127,17 +136,17 @@ class MapleCalculator
     }
 
     private static bool _returnResult = false;
-    private static string tempResult = "";
+    private static String tempResult = "";
     private static void cbText(IntPtr data, int tag, IntPtr output)
     {
         tempResult = Marshal.PtrToStringAnsi(output);
-        if (counter == expressions.Count)
+        if (_counter == _expressions.Count)
             _returnResult = true;
     }
 
     private static void cbError(IntPtr data, IntPtr offset, IntPtr msg)
     {
-        string s = Marshal.PtrToStringAnsi(msg);
+        String s = Marshal.PtrToStringAnsi(msg);
         Console.WriteLine(s);
     }
 

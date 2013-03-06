@@ -5,6 +5,7 @@ public class MatematicsModelView : MonoBehaviour
 {
     public bool Visible;
 
+    private bool isShowed = true;
     private Rect _windowPosition;
     private Vector2 _scrollViewVector = Vector2.zero;
     public PhysicsObject CurrentPhysicsObject { get; set; }
@@ -12,7 +13,7 @@ public class MatematicsModelView : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        _windowPosition = new Rect(Screen.width / 4, Screen.height / 4, 200, Screen.height / 2);
+        _windowPosition = new Rect(250, 10, 200, Screen.height / 2);
     }
 
     void OnGUI()
@@ -29,7 +30,17 @@ public class MatematicsModelView : MonoBehaviour
 
     void DoWindow(int id)
     {
-        _scrollViewVector = GUI.BeginScrollView(new Rect(10, 10, _windowPosition.width - 20, _windowPosition.height - 20), _scrollViewVector, new Rect(0, 0, 160, 400));
+        if (GUI.Button(new Rect(2, 2, 23, 23), "x"))
+        {
+            isShowed = !isShowed;
+
+            if (isShowed)
+                _windowPosition.height = Screen.height / 2;
+            else
+                _windowPosition.height = 50;
+        }
+
+        _scrollViewVector = GUI.BeginScrollView(new Rect(10, 20, _windowPosition.width - 20, _windowPosition.height - 30), _scrollViewVector, new Rect(0, 0, 160, 400));
         int index = 0;
         if (CurrentPhysicsObject != null)
         foreach (BasicPhysicsProperty property in CurrentPhysicsObject.GetProperties())

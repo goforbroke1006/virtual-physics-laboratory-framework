@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class LabPlayer : MonoBehaviour
@@ -9,6 +12,8 @@ public class LabPlayer : MonoBehaviour
 
     protected MapleBuilder _mapleBuilder;
     protected MapleParser _mapleParser;
+
+    //public WatchTimer GlobalLabTimer;
 
     // Use this for initialization
     void Start()
@@ -24,7 +29,18 @@ public class LabPlayer : MonoBehaviour
 
     void Update()
     {
-        if (_isPlay) _mapleParser.Apply();
+        if (_isPlay)
+        {
+            int index = _mapleParser.Apply();
+
+            //GlobalLabTimer.SetTime(_currentConfig.Start + index * _currentConfig.Step);
+
+            List<SimpleTimer> timers = FindObjectsOfType(typeof(SimpleTimer)).OfType<SimpleTimer>().ToList();
+            foreach (SimpleTimer timer in timers)
+            {
+                timer.AddTime(_currentConfig.Step);
+            }
+        }
     }
 
     void OnGUI()
@@ -55,18 +71,14 @@ public class LabPlayer : MonoBehaviour
 
     public void CalculateLab()
     {
-        ((OutputConsole)FindObjectOfType(typeof(OutputConsole))).AddMessage("Calculate Lab");
-
         if (Application.platform == RuntimePlatform.WindowsWebPlayer)
         {
-            ((OutputConsole)FindObjectOfType(typeof(OutputConsole))).AddMessage("WindowsWebPlayer");
-            _webConnector.ExternallCall(_mapleBuilder.GetLabworkCode(_currentConfig));
+            _webConnector.ExternallCall(_mapleBuilder.GetCode_Labwork(_currentConfig));
         }
         else if (Application.platform == RuntimePlatform.WindowsEditor || 
             Application.platform == RuntimePlatform.WindowsPlayer)
         {
-            ((OutputConsole)FindObjectOfType(typeof(OutputConsole))).AddMessage("WindowsEditor || WindowsPlayer");
-            MapleCalculator.Calculate(_mapleBuilder.GetLabworkCode(
+            MapleCalculator.Calculate(_mapleBuilder.GetCode_Labwork(
                 _currentConfig), 
                 this,
                 (OutputConsole)FindObjectOfType(typeof(OutputConsole)));
@@ -91,7 +103,7 @@ public class LabPlayer : MonoBehaviour
     }
 
     protected string _response = "";
-    public void SetResponse(string resp)
+    public void SetResponse(String resp)
     {
         _response = resp;
         _mapleParser.Process(_response);
