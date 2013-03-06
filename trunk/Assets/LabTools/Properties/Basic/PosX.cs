@@ -1,6 +1,5 @@
 using System;
 using System.Globalization;
-using UnityEditor;
 using UnityEngine;
 using System.Collections;
 

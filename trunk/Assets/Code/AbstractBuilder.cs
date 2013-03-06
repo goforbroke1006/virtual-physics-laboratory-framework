@@ -14,11 +14,11 @@ public abstract class AbstractBuilder
         Formulas = formulas;
     }
 
-    public abstract string GetLabworkCode(LabworkConfig config);
+    public abstract string GetCode_Labwork(LabworkConfig config);
 
-    public abstract string GetDefineVariableCode();
-    public abstract string GetDefineFieldVariableCode();
-    public abstract string GetPastedFormulasCode();
-    public abstract string GetFillFieldWithVariableCode();
-    public abstract string GetReturnFieldVariableCode();
+    public abstract string GetCode_DefineVariableCode();
+    public abstract string GetCode_DefineFieldVariableCode();
+    public abstract string GetCode_PastedFormulasCode();
+    public abstract string GetCode_FillFieldWithVariableCode();
+    public abstract string GetCode_ReturnFieldVariableCode();
 }

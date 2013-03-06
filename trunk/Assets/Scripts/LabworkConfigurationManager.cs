@@ -17,6 +17,14 @@ public class LabworkConfigurationManager : MonoBehaviour
 
     }
 
+    void OnGUI()
+    {
+        if (GUI.Button(new Rect(10, Screen.width - 10 - 30, 40, 30), "Менеждер\nконфигурации"))
+        {
+            //
+        }
+    }
+
     public LabworkConfig GetConfig()
     {
         return _config;
@@ -31,7 +39,7 @@ public class LabworkConfigurationManager : MonoBehaviour
     {
         LabworkConfig config = new LabworkConfig();
         config.Start = 0;
-        config.Finish = 50;
+        config.Finish = 80;
         config.Step = 0.1f;
         config.Current = 0;
         SetConfig(config);

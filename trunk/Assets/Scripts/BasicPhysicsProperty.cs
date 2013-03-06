@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UnityEditor;
+//using UnityEditor;
 using UnityEngine;
 using Object = System.Object;
 
 public class BasicPhysicsProperty : MonoBehaviour
 {
     public string CurrentValue { get; set; }
+    public bool BuildField = true;
 
     public enum EditModeEnum
     {

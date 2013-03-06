@@ -13,7 +13,7 @@ public abstract class AbstractParser
     }
 
     public abstract void Process(string data);
-    public abstract void Apply();
+    public abstract int Apply();
     public abstract void Apply(int index);
     public abstract void ApplyVariable(string identifier, string propertyName, string propertyValue);
 }

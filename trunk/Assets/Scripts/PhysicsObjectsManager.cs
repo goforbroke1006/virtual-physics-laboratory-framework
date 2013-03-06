@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class PhysicsObjectsManager : MonoBehaviour
 {
-    public Texture InfoTexture;
     public Material LineMaterial;
+
+    private bool isShowed = true;
 
     private PhysicsObject _currentPhysicsObject;
 
@@ -14,86 +15,25 @@ public class PhysicsObjectsManager : MonoBehaviour
 
     void OnGUI()
     {
-        _windowPosition = GUI.Window(
-            0,
-            _windowPosition,
-            DoPhysComponentsManagetWindowPosition,
-            "Физические объекты");
-
-        draw();
+        _windowPosition = GUI.Window(0, _windowPosition, DoWindow, "Физические объекты");
     }
 
-    //void OnDrawGizmos()
-    //{
-    //    try
-    //    {
-    //        Gizmos.color = new Color(0f, 0f, 0f);
-    //        PhysicsObject po = GetCurrectObject();
-    //        Gizmos.DrawLine(po.transform.position, po.transform.position + new Vector3(100, 0, 0));
-    //        Gizmos.DrawLine(po.transform.position, po.transform.position + new Vector3(0, 100, 0));
-    //        Gizmos.DrawLine(po.transform.position, po.transform.position + new Vector3(0, 0, 100));
-
-    //        //Handle.
-    //    }
-    //    catch (Exception exception)
-    //    {
-    //        Debug.LogWarning(exception.Message);
-    //    }
-    //}
-
-    void draw()
+    void DoWindow(int id)
     {
-        PhysicsObject po = GetCurrectObject();
-
-        //GL.PushMatrix();
-        //LineMaterial.SetPass(0);
-        //GL.LoadOrtho();
-        //GL.Begin(GL.LINES);
-        //GL.Color(Color.red);
-        //GL.Vertex(po.transform.position);
-        //GL.Vertex(po.transform.position + new Vector3(100, 0, 0));
-        //GL.End();
-        //GL.PopMatrix();
-
-        if (po != null)
+        if (GUI.Button(new Rect(2, 2, 23, 23), "x"))
         {
-            LineMaterial.SetPass(0);
-            GL.Begin(GL.LINES);
+            isShowed = !isShowed;
 
-            GL.Color(new Color(1f, 0f, 0f));
-            GL.Vertex3(po.transform.position.x, po.transform.position.y, po.transform.position.z);
-            GL.Vertex3(po.transform.position.x + 1, po.transform.position.y, po.transform.position.z);
-            GL.End();
-
-            GL.Color(new Color(0f, 1f, 0f));
-            GL.Vertex3(po.transform.position.x, po.transform.position.y, po.transform.position.z);
-            GL.Vertex3(po.transform.position.x, po.transform.position.y+1, po.transform.position.z);
-            GL.End();
-
-            GL.Color(new Color(0f, 0f, 1f));
-            GL.Vertex3(po.transform.position.x, po.transform.position.y, po.transform.position.z);
-            GL.Vertex3(po.transform.position.x, po.transform.position.y, po.transform.position.z+1);
-            GL.End();
-
-            //GL.Vertex3(0, 0, 0);
-            //GL.Vertex3(1, 0, 0);
-            //GL.Vertex3(0, 1, 0);
-            //GL.Vertex3(1, 1, 0);
-            //GL.Color(new Color(0f, 0f, 0f, 0.5f));
-            //GL.Vertex3(0, 0, 0);
-            //GL.Vertex3(0, 1, 0);
-            //GL.Vertex3(1, 0, 0);
-            //GL.Vertex3(1, 1, 0);
-            //GL.End();
+            if (isShowed) 
+                _windowPosition.height = Screen.height/2;
+            else 
+                _windowPosition.height = 50;
         }
-    }
 
-    void DoPhysComponentsManagetWindowPosition(int id)
-    {
         if (_currentPhysicsObject != null)
-            GUI.Label(new Rect(10, 30, _windowPosition.width - 20, 24), "Текущий элемент: " + _currentPhysicsObject.Identifier);
+            GUI.Label(new Rect(10, 30, _windowPosition.width - 20, 24), "Тек. элемент: " + _currentPhysicsObject.Identifier);
         else
-            GUI.Label(new Rect(10, 30, _windowPosition.width - 20, 24), "Текущий элемент: ");
+            GUI.Label(new Rect(10, 30, _windowPosition.width - 20, 24), "Тек. элемент: ");
 
         if (GetPhysicsObjects() != null)
         {
@@ -109,20 +49,6 @@ public class PhysicsObjectsManager : MonoBehaviour
         }
         else
             Debug.Log("Has not Phys Components");
-
-        // Draw INFO button
-        GUI.DrawTexture(new Rect(10, _windowPosition.height - 40, 30, 30), InfoTexture);
-        if (GUI.Button(new Rect(10, _windowPosition.height - 40, 30, 30), ""))
-        {
-            // TODO: show inforamtion about current Phys-Object
-        }
-
-        // Draw EDIT button
-        GUI.DrawTexture(new Rect(45, _windowPosition.height - 40, 30, 30), InfoTexture);
-        if (GUI.Button(new Rect(45, _windowPosition.height - 40, 30, 30), ""))
-        {
-            // TODO: show window for edit properties of current Phys-Object
-        }
 
         GUI.DragWindow();
     }

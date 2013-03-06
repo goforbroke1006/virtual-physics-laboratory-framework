@@ -51,6 +51,7 @@
      <Compile Include="Assets\Code\MapleOfflineCalc\Desktop\MapleEngine.cs" />
      <Compile Include="Assets\Code\MapleOfflineCalc\MapleBuilder.cs" />
      <Compile Include="Assets\Code\MapleOfflineCalc\MapleParser.cs" />
+     <Compile Include="Assets\Code\NumberView.cs" />
      <Compile Include="Assets\Code\Wellocity\WellocityEngine.cs" />
      <Compile Include="Assets\LabTools\Properties\Additional\VelocityX.cs" />
      <Compile Include="Assets\LabTools\Properties\Additional\VelocityY.cs" />
@@ -76,6 +77,7 @@
      <Compile Include="Assets\Scripts\OutputConsole.cs" />
      <Compile Include="Assets\Scripts\PhysicsObject.cs" />
      <Compile Include="Assets\Scripts\PhysicsObjectsManager.cs" />
+     <Compile Include="Assets\Scripts\SimpleTimer.cs" />
      <Compile Include="Assets\Scripts\WebConnector.cs" />
      <None Include="Assets\Resources\Codes\template_1.txt" />
      <None Include="Assets\Resources\Codes\startup_1.txt" />

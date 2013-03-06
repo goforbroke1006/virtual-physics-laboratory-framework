@@ -1,18 +1,27 @@
+using System;
 using UnityEngine;
 using System.Collections;
 
 public class OutputConsole : MonoBehaviour
 {
     public bool Visible;
+    public bool AutoClear = true;
+    public int MaxLength = 500;
 
-    private Rect _windowPosition = new Rect(10, Screen.height / 4 * 3, Screen.width - 50, Screen.height / 4);
+    private Rect _windowPosition = new Rect(10, Screen.height / 4 * 3 - 100, Screen.width - 100, Screen.height / 4);
     private Vector2 _scroll;// = new Vector2(100, 0);
-    private string _content = "";
+    private String _content = "";
     
-    public void AddMessage(string message)
+    public void AddMessage(String message)
     {
         if (message.Length > 0)
-            _content += "\n" + message;
+            _content += message;
+
+        if (AutoClear && _content.Length > MaxLength)
+        {
+            string temp = _content.Substring(MaxLength, _content.Length) + "Cut.";
+            _content = temp;
+        }
     }
 
     void OnGUI()

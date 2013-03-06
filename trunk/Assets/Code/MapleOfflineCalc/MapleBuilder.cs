@@ -12,18 +12,18 @@ public class MapleBuilder : AbstractBuilder
     {
     }
 
-    public override string GetLabworkCode(LabworkConfig config)
+    public override string GetCode_Labwork(LabworkConfig config)
     {
         Dictionary<string, string> context = new Dictionary<string, string>();
         context.Add("start",        config.Start.ToString(CultureInfo.InvariantCulture));
         context.Add("stop",         config.Finish.ToString(CultureInfo.InvariantCulture));
         context.Add("step",         config.Step.ToString(CultureInfo.InvariantCulture));
         context.Add("ctime",        config.Current.ToString(CultureInfo.InvariantCulture));
-        context.Add("define_variables",         GetDefineVariableCode());
-        context.Add("define_variables_fields",  GetDefineFieldVariableCode());
-        context.Add("paste_formulas",           GetPastedFormulasCode());
-        context.Add("fill_fields",              GetFillFieldWithVariableCode());
-        context.Add("return_fields",            GetReturnFieldVariableCode());
+        context.Add("define_variables",         GetCode_DefineVariableCode());
+        context.Add("define_variables_fields",  GetCode_DefineFieldVariableCode());
+        context.Add("paste_formulas",           GetCode_PastedFormulasCode());
+        context.Add("fill_fields",              GetCode_FillFieldWithVariableCode());
+        context.Add("return_fields",            GetCode_ReturnFieldVariableCode());
 
         string result = WellocityEngine.MergeTemplate("Codes/template_1", context);
 
@@ -31,7 +31,7 @@ public class MapleBuilder : AbstractBuilder
         return result;
     }
 
-    public override string GetDefineVariableCode()
+    public override string GetCode_DefineVariableCode()
     {
         string result = "";
         foreach (PhysicsObject physicsObject in PhysicsObjects)
@@ -40,16 +40,17 @@ public class MapleBuilder : AbstractBuilder
         return result;
     }
 
-    public override string GetDefineFieldVariableCode()
+    public override string GetCode_DefineFieldVariableCode()
     {
         string result = "";
         foreach (PhysicsObject physicsObject in PhysicsObjects)
             foreach (BasicPhysicsProperty property in physicsObject.GetProperties())
-                result += string.Format("{0}__{1}__field(1..calc_count): \n", physicsObject.Identifier, property.GetName());
+                if (property.BuildField)
+                    result += string.Format("{0}__{1}__field(1..calc_count): \n", physicsObject.Identifier, property.GetName());
         return result;
     }
 
-    public override string GetPastedFormulasCode()
+    public override string GetCode_PastedFormulasCode()
     {
         string result = "";
         Regex formulaRegex = new Regex(@"([a-zA-Z_]+[:=|\s]{2,}[a-zA-Z0-9_\.\+\-\*\/\(\)\:\=]+[\s|:$]*)");
@@ -67,21 +68,23 @@ public class MapleBuilder : AbstractBuilder
         return result;
     }
 
-    public override string GetFillFieldWithVariableCode()
+    public override string GetCode_FillFieldWithVariableCode()
     {
         string result = "";
         foreach (PhysicsObject physicsObject in PhysicsObjects)
             foreach (BasicPhysicsProperty property in physicsObject.GetProperties())
-                result += string.Format("{0}__{1}__field[counter]:={0}__{1}: \n", physicsObject.Identifier, property.GetName());
+                if (property.BuildField)
+                    result += string.Format("{0}__{1}__field[counter]:={0}__{1}: \n", physicsObject.Identifier, property.GetName());
         return result;
     }
 
-    public override string GetReturnFieldVariableCode()
+    public override string GetCode_ReturnFieldVariableCode()
     {
         string result = "";
         foreach (PhysicsObject physicsObject in PhysicsObjects)
             foreach (BasicPhysicsProperty property in physicsObject.GetProperties())
-                result += string.Format("{0}__{1}__field = seq({0}__{1}__field[i], i=1..calc_count); \n", physicsObject.Identifier, property.GetName());
+                if (property.BuildField)
+                    result += string.Format("{0}__{1}__field = seq({0}__{1}__field[i], i=1..calc_count); \n", physicsObject.Identifier, property.GetName());
         return result;
     }
 }
