@@ -14,6 +14,14 @@ public class OutputConsole : MonoBehaviour
     
     public void AddMessage(String message)
     {
+        message = message.Replace(" ", ""); 
+        message = message.Replace("0,", ""); 
+        message = message.Replace("e-", "-"); 
+
+        //message.Trim(new char[] {' ', '_'});
+        //if (message.Length > 0)
+        //    _content += message.Substring(message.Length - 100, 100);
+
         if (message.Length > 0)
             _content += message;
 
@@ -43,5 +51,10 @@ public class OutputConsole : MonoBehaviour
         GUILayout.EndScrollView();
 
         GUI.DragWindow();
+    }
+
+    public static OutputConsole GetInstance()
+    {
+        return (OutputConsole)FindObjectOfType(typeof(OutputConsole));
     }
 }

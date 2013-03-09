@@ -34,6 +34,9 @@ public class MapleParser : AbstractParser
         {
             List<string> values = new List<string>();
             var valuesCollection = _valueRegex.Matches(fieldMatch.Groups[2].Value);
+
+            string parsingConsoleOutput = fieldMatch.Groups[1].Value + ": ";
+
             foreach (Match valueMatch in valuesCollection)
             {
                 string generalViewValue = valueMatch.Groups[1].Value;
@@ -55,14 +58,13 @@ public class MapleParser : AbstractParser
                 floatValue = !numberView.IsPositive ? floatValue*(-1) : floatValue;
 
                 values.Add(floatValue.ToString(CultureInfo.InvariantCulture));
+                parsingConsoleOutput += floatValue.ToString(CultureInfo.InvariantCulture);
             }
 
             _fields.Add(fieldMatch.Groups[1].Value, values);
-            
-            Debug.Log(
-                string.Format("MapleParser - Process - Add field \"{0} with {1} values.", 
-                fieldMatch.Groups[1].Value, 
-                values.Count));
+
+            //OutputConsole.GetInstance().AddMessage(parsingConsoleOutput);
+            Debug.Log(parsingConsoleOutput);
         }
     }
 

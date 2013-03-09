@@ -73,7 +73,7 @@ public class LabPlayer : MonoBehaviour
     {
         if (Application.platform == RuntimePlatform.WindowsWebPlayer)
         {
-            _webConnector.ExternallCall(_mapleBuilder.GetCode_Labwork(_currentConfig));
+            _webConnector.JsExternalCall(_mapleBuilder.GetCode_Labwork(_currentConfig));
         }
         else if (Application.platform == RuntimePlatform.WindowsEditor || 
             Application.platform == RuntimePlatform.WindowsPlayer)
@@ -102,10 +102,11 @@ public class LabPlayer : MonoBehaviour
         _mapleParser.Apply(0);
     }
 
-    protected string _response = "";
-    public void SetResponse(String resp)
+    private string _response = "";
+    public void SetResponse(string resp)
     {
         _response = resp;
         _mapleParser.Process(_response);
+        OutputConsole.GetInstance().AddMessage("Response length = " + _response.Length);
     }
 }
