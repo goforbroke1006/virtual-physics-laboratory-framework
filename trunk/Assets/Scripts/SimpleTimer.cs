@@ -30,8 +30,8 @@ public class SimpleTimer : MonoBehaviour
 
     void DoWindow(int id)
     {
-        if (_isStarted)
-            ((OutputConsole)FindObjectOfType(typeof(OutputConsole))).AddMessage("_ctime = " + _ctime);
+//        if (_isStarted)
+//            ((OutputConsole)FindObjectOfType(typeof(OutputConsole))).AddMessage("_ctime = " + _ctime);
 
         GUI.TextField(new Rect(5, 25, 90, 23), _ctime.ToString(CultureInfo.InvariantCulture));
         if (GUI.Button(new Rect(5, 50, 40, 23), "Старт")) 

@@ -9,16 +9,16 @@ using UnityEngine;
 
 public class WebConnector : MonoBehaviour
 {
-    public void ExternallCall(string data)
+    public void JsExternalCall(string data)
     {
-        ((OutputConsole)FindObjectOfType(typeof(OutputConsole))).AddMessage("Send: " + data);
+        //((OutputConsole)FindObjectOfType(typeof(OutputConsole))).AddMessage("Send: " + data);
         if (data.Length > 0)
             Application.ExternalCall("MapleCalculate", data);
     }
 
     public void UnityCall(string data)
     {
-        ((OutputConsole)FindObjectOfType(typeof(OutputConsole))).AddMessage("Receiv: " + data);
+        //((OutputConsole)FindObjectOfType(typeof(OutputConsole))).AddMessage("Receiv: " + data);
         ((LabPlayer)FindObjectOfType(typeof(LabPlayer))).SetResponse(data);
     }
 }
