@@ -6,12 +6,10 @@ using System.Text;
 public abstract class AbstractBuilder
 {
     protected List<PhysicsObject> PhysicsObjects;
-    protected List<Formula> Formulas;
 
-    public AbstractBuilder(List<PhysicsObject> physicsObjects, List<Formula> formulas)
+    public AbstractBuilder(List<PhysicsObject> physicsObjects)
     {
         PhysicsObjects = physicsObjects;
-        Formulas = formulas;
     }
 
     public abstract string GetCode_Labwork(LabworkConfig config);

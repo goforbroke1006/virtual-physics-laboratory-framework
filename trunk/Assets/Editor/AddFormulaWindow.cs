@@ -1,4 +1,5 @@
-﻿using System;
+﻿/*
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -44,3 +45,4 @@ public class AddFormulaWindow : EditorWindow
 }
 
 // body_1__PositionY := body_1__PositionY - 0.05 : body_2__PositionY := body_2__PositionY - 0.05 :
+*/

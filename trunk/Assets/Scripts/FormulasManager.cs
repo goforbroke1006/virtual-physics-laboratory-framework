@@ -1,3 +1,4 @@
+/*
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -66,3 +67,4 @@ public class FormulasManager : MonoBehaviour
         return FindObjectsOfType(typeof (Formula)).OfType<Formula>().ToList();
     }
 }
+*/

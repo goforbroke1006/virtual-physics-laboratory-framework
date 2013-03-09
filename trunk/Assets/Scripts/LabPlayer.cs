@@ -23,7 +23,7 @@ public class LabPlayer : MonoBehaviour
         _currentConfig =
             ((ConfigurationManager)FindObjectOfType(typeof(ConfigurationManager))).GetConfig();
 
-        _mapleBuilder = new MapleBuilder(PhysicsObjectsManager.GetPhysicsObjects(), FormulasManager.GetFormulas());
+        _mapleBuilder = new MapleBuilder(PhysicsObjectsManager.GetPhysicsObjects());
         _mapleParser = new MapleParser(PhysicsObjectsManager.GetPhysicsObjects());
     }
 

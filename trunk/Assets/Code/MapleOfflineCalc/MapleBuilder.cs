@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class MapleBuilder : AbstractBuilder
 {
-    public MapleBuilder(List<PhysicsObject> physicsObjects, List<Formula> formulas) : base(physicsObjects, formulas)
+    public MapleBuilder(List<PhysicsObject> physicsObjects) : base(physicsObjects)
     {
     }
 
@@ -30,6 +30,7 @@ public class MapleBuilder : AbstractBuilder
         string result = WellocityEngine.MergeTemplate("Codes/template_1", context);
 
         Debug.Log(result);
+        OutputConsole.GetInstance().AddMessage("Builder result: " + result);
         return result;
     }
 
@@ -55,14 +56,20 @@ public class MapleBuilder : AbstractBuilder
     public override string GetCode_PastedFormulasCode()
     {
         string result = "";
-        foreach (Formula formula in Formulas)
+        foreach (PhysicsObject po in PhysicsObjects)
         {
-            MatchCollection collection = MapleCodeUtil.FormulaRegex.Matches(formula.Code);
-            foreach (Match match in collection)
+            foreach (BasicPhysicsProperty prop in po.GetProperties())
             {
-                string temp = match.Groups[1].Value;
-                if (temp.Substring(temp.Length - 1, 1) != ":") temp += ":";
-                result += temp + "\n";
+                if (prop.BuildField && !string.IsNullOrEmpty(prop.Formula))
+                {
+                    string formula = string.Format(
+                        MapleCodeUtil.DefineAndSetVariableTemplate, 
+                        po.Identifier, 
+                        prop.GetName(), 
+                        prop.Formula);
+                    result += formula;
+                    result += "\n";
+                }
             }
         }
         return result;
