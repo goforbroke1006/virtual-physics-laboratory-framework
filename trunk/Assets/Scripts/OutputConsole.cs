@@ -1,12 +1,11 @@
 using System;
 using UnityEngine;
-using System.Collections;
 
 public class OutputConsole : MonoBehaviour
 {
     public bool Visible;
     public bool AutoClear = true;
-    public int MaxLength = 500;
+    public int MaxLength = 25000;
 
     private Rect _windowPosition = new Rect(10, Screen.height / 4 * 3 - 100, Screen.width - 100, Screen.height / 4);
     private Vector2 _scroll;// = new Vector2(100, 0);
@@ -14,20 +13,12 @@ public class OutputConsole : MonoBehaviour
     
     public void AddMessage(String message)
     {
-        message = message.Replace(" ", ""); 
-        message = message.Replace("0,", ""); 
-        message = message.Replace("e-", "-"); 
-
-        //message.Trim(new char[] {' ', '_'});
-        //if (message.Length > 0)
-        //    _content += message.Substring(message.Length - 100, 100);
-
         if (message.Length > 0)
-            _content += message;
+            _content += message + "\n";
 
         if (AutoClear && _content.Length > MaxLength)
         {
-            string temp = _content.Substring(MaxLength, _content.Length) + "Cut.";
+            string temp = _content.Substring(MaxLength, _content.Length - MaxLength) + "Cut.";
             _content = temp;
         }
     }
