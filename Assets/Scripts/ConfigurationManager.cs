@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class LabworkConfigurationManager : MonoBehaviour
+public class ConfigurationManager : MonoBehaviour
 {
     private LabworkConfig _config;
 
@@ -39,7 +39,7 @@ public class LabworkConfigurationManager : MonoBehaviour
     {
         LabworkConfig config = new LabworkConfig();
         config.Start = 0;
-        config.Finish = 80;
+        config.Finish = 25;
         config.Step = 0.1f;
         config.Current = 0;
         SetConfig(config);

@@ -1,16 +1,15 @@
 using UnityEngine;
-using System.Collections;
 
 public class CameraController : MonoBehaviour 
 {
-    private bool enabled = false;
+    private bool _enabled;
 
-    private bool moveForward = false;
-    private bool moveBack = false;
-    private bool moveLeft = false;
-    private bool moveRight = false;
-    private bool moveUp = false;
-    private bool moveDown = false;
+    private bool _moveForward;
+    private bool _moveBack;
+    private bool _moveLeft;
+    private bool _moveRight;
+//    private bool moveUp = false;
+//    private bool moveDown = false;
 
     // Use this for initialization
 	void Start () {
@@ -20,38 +19,38 @@ public class CameraController : MonoBehaviour
 	// Update is called once per frame
 	void Update () {
         if (Input.GetMouseButtonDown(1))
-            enabled = true;
+            _enabled = true;
         if (Input.GetMouseButtonUp(1))
-            enabled = false;
+            _enabled = false;
 
-        if (enabled)
+        if (_enabled)
         {
-            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) moveForward = true;
-            if (Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.W)) moveForward = false;
+            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) _moveForward = true;
+            if (Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.W)) _moveForward = false;
 
-            if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S)) moveBack = true;
-            if (Input.GetKeyUp(KeyCode.DownArrow) || Input.GetKeyUp(KeyCode.S)) moveBack = false;
+            if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S)) _moveBack = true;
+            if (Input.GetKeyUp(KeyCode.DownArrow) || Input.GetKeyUp(KeyCode.S)) _moveBack = false;
 
-            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A)) moveLeft = true;
-            if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.A)) moveLeft = false;
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A)) _moveLeft = true;
+            if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.A)) _moveLeft = false;
 
-            if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D)) moveRight = true;
-            if (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.D)) moveRight = false;
+            if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D)) _moveRight = true;
+            if (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.D)) _moveRight = false;
         }
 
-        if (!enabled)
+        if (!_enabled)
         {
-            moveForward = false;
-            moveBack = false;
-            moveLeft = false;
-            moveRight = false;
-            moveUp = false;
-            moveDown = false;
+            _moveForward = false;
+            _moveBack = false;
+            _moveLeft = false;
+            _moveRight = false;
+//            moveUp = false;
+//            moveDown = false;
         }
 
-        if (moveForward) transform.Translate(transform.rotation * transform.forward * Time.deltaTime);
-        if (moveBack) transform.Translate(transform.forward * -1 * Time.deltaTime);
-        if (moveLeft) transform.Translate(transform.right * -1 * Time.deltaTime);
-        if (moveRight) transform.Translate(transform.right * Time.deltaTime);
+        if (_moveForward) transform.Translate(transform.rotation * transform.forward * Time.deltaTime);
+        if (_moveBack) transform.Translate(transform.forward * -1 * Time.deltaTime);
+        if (_moveLeft) transform.Translate(transform.right * -1 * Time.deltaTime);
+        if (_moveRight) transform.Translate(transform.right * Time.deltaTime);
 	}
 }

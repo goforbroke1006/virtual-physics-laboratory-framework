@@ -19,9 +19,9 @@ public class LabPlayer : MonoBehaviour
     void Start()
     {
         _webConnector = (WebConnector)FindObjectOfType(typeof(WebConnector));
-        ((LabworkConfigurationManager)FindObjectOfType(typeof(LabworkConfigurationManager))).SetDefaultConfig();
+        ((ConfigurationManager)FindObjectOfType(typeof(ConfigurationManager))).SetDefaultConfig();
         _currentConfig =
-            ((LabworkConfigurationManager)FindObjectOfType(typeof(LabworkConfigurationManager))).GetConfig();
+            ((ConfigurationManager)FindObjectOfType(typeof(ConfigurationManager))).GetConfig();
 
         _mapleBuilder = new MapleBuilder(PhysicsObjectsManager.GetPhysicsObjects(), FormulasManager.GetFormulas());
         _mapleParser = new MapleParser(PhysicsObjectsManager.GetPhysicsObjects());
@@ -100,8 +100,14 @@ public class LabPlayer : MonoBehaviour
     private string _response = "";
     public void SetResponse(string resp)
     {
-        _response = resp;
-        _mapleParser.Process(_response);
-        OutputConsole.GetInstance().AddMessage("Response length = " + _response.Length);
+        try
+        {
+            //OutputConsole.GetInstance().AddMessage("Response length = " + resp.Length);
+            _response = resp;
+            _mapleParser.Process(_response);
+        } catch(Exception exception)
+        {
+            OutputConsole.GetInstance().AddMessage(exception.Message);
+        }
     }
 }

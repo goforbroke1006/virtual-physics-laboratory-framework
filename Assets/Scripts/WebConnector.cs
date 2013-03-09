@@ -18,7 +18,7 @@ public class WebConnector : MonoBehaviour
 
     public void UnityCall(string data)
     {
-        //((OutputConsole)FindObjectOfType(typeof(OutputConsole))).AddMessage("Receiv: " + data);
+        //OutputConsole.GetInstance().AddMessage("Received info: \n" + data);
         ((LabPlayer)FindObjectOfType(typeof(LabPlayer))).SetResponse(data);
     }
 }
