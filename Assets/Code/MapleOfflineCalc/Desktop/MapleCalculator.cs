@@ -22,15 +22,13 @@ class MapleCalculator
     }
 
     private static List<string> _expressions;
-    private static readonly Regex CodeItemRegex = new Regex(@"(print\(\'endl\'\)\;)|([a-zA-Z_]+\s=\sseq\([\w_\[\]\(\)\,\.\=\s]+[;$])|(while[a-zA-Z0-9\s_.,\+\-\*\/\[\]\(\)\=\<\>\:]+end:)|([a-zA-Z_]+:=[a-zA-Z0-9\s_.,\+\-\*\/\[\]\(\)]+[:$])");
+    
     private static int _counter = 0;
     private static string _finalResult = "";
 
-    public static void Calculate(String code, LabPlayer labPlayer)//, OutputConsole console)
+    public static void Calculate(String code, LabPlayer labPlayer)
     {
         _labPlayer = labPlayer;
-        //_console = console;
-        //_console.AddMessage("MapleCalculator - Calculate - Code for calculating: \n" + code);
 
         if (!_started)
             StartMaple();
@@ -64,7 +62,7 @@ class MapleCalculator
             _counter++;
             IntPtr val = MapleEngine.EvalMapleStatement(_kv, Encoding.ASCII.GetBytes(_expressions[_counter - 1]));
             if (MapleEngine.IsMapleStop(_kv, val).ToInt32() != 0)
-                _returnResult = true; //return;
+                _returnResult = true;
         }
         else _returnResult = true;
     }
@@ -72,7 +70,7 @@ class MapleCalculator
     private static List<String> GetExpressionsList(String code)
     {
         List<string> list = new List<string>();
-        MatchCollection collection = CodeItemRegex.Matches(code);
+        MatchCollection collection = MapleCodeUtil.CodeItemRegex.Matches(code);
         foreach (Match match in collection)
         {
             String temp = "print('null')";

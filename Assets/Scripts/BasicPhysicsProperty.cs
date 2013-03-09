@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-//using UnityEditor;
-using UnityEngine;
-using Object = System.Object;
+﻿using UnityEngine;
 
 public class BasicPhysicsProperty : MonoBehaviour
 {
     public string CurrentValue { get; set; }
     public bool BuildField = true;
+    public string Formula;
 
     public enum EditModeEnum
     {
