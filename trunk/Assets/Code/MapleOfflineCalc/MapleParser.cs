@@ -71,7 +71,7 @@ public class MapleParser : AbstractParser
     public override int Apply()
     {
         //Debug.Log("MapleParser - Apply() - Start...");
-        if (_fields != null && _fields.Count > 0 && _index < _fields.First().Value.Count)
+        if (_fields != null) //  && _fields.Count > 0 // && _index < _fields.First().Value.Count
         {
             foreach (KeyValuePair<string, List<string>> field in _fields)
             {
@@ -82,8 +82,12 @@ public class MapleParser : AbstractParser
 
             if (_index + 1 <= _fields.First().Value.Count)
                 _index++;
+
+            OutputConsole.GetInstance().AddMessage("Update # " + (_index - 1));
             return _index - 1;
         }
+        else
+            OutputConsole.GetInstance().AddMessage("Fields not found");
 
         return _index;
     }

@@ -13,7 +13,7 @@ class MapleCalculator
     private static MapleEngine.MapleCallbacks _cb;
     private static IntPtr _kv = new IntPtr(0);
     private static LabPlayer _labPlayer;
-    private static OutputConsole _console;
+    //private static OutputConsole _console;
 
     public MapleCalculator()
     {
@@ -26,10 +26,10 @@ class MapleCalculator
     private static int _counter = 0;
     private static String _finalResult = "";
 
-    public static void Calculate(String code, LabPlayer labPlayer, OutputConsole console)
+    public static void Calculate(String code, LabPlayer labPlayer)//, OutputConsole console)
     {
         _labPlayer = labPlayer;
-        _console = console;
+        //_console = console;
         //_console.AddMessage("MapleCalculator - Calculate - Code for calculating: \n" + code);
 
         if (!_started)
@@ -41,7 +41,7 @@ class MapleCalculator
         {
             if (_returnResult)
             {
-                _console.AddMessage("FinalResult: \n" + _finalResult); 
+                //_console.AddMessage("FinalResult: \n" + _finalResult); 
                 _labPlayer.SetResponse(_finalResult); break;
             }
             if (tempResult.Length > 0)

@@ -31,15 +31,11 @@ public class LabPlayer : MonoBehaviour
     {
         if (_isPlay)
         {
-            int index = _mapleParser.Apply();
-
-            //GlobalLabTimer.SetTime(_currentConfig.Start + index * _currentConfig.Step);
+            _mapleParser.Apply();
 
             List<SimpleTimer> timers = FindObjectsOfType(typeof(SimpleTimer)).OfType<SimpleTimer>().ToList();
-            foreach (SimpleTimer timer in timers)
-            {
+            foreach (SimpleTimer timer in timers) 
                 timer.AddTime(_currentConfig.Step);
-            }
         }
     }
 
@@ -80,8 +76,7 @@ public class LabPlayer : MonoBehaviour
         {
             MapleCalculator.Calculate(_mapleBuilder.GetCode_Labwork(
                 _currentConfig), 
-                this,
-                (OutputConsole)FindObjectOfType(typeof(OutputConsole)));
+                this);
         }
     }
 
