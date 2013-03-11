@@ -37,11 +37,13 @@ public class ConfigurationManager : MonoBehaviour
 
     public void SetDefaultConfig()
     {
-        LabworkConfig config = new LabworkConfig();
-        config.Start = 0;
-        config.Finish = 25;
-        config.Step = 0.1f;
-        config.Current = 0;
+        LabworkConfig config = new LabworkConfig
+        {
+            Start = 0, 
+            Finish = 100, 
+            Step = 0.1f, 
+            Current = 0
+        };
         SetConfig(config);
     }
 }
