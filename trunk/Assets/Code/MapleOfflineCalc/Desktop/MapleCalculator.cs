@@ -39,7 +39,7 @@ class MapleCalculator
         {
             if (_returnResult)
             {
-                OutputConsole.GetInstance().AddMessage("Received info: \n" + _finalResult);
+                //OutputConsole.GetInstance().AddMessage("Received info: \n" + _finalResult);
                 _labPlayer.SetResponse(_finalResult);
                 break;
             }
