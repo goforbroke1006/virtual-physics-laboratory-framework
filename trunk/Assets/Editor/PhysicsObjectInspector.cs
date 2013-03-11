@@ -1,3 +1,4 @@
+/*
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +44,7 @@ public class PhysicsObjectInspector : Editor
         else
         {
             EditorGUILayout.TextField(property.GetName(), property.GetValue());
-        }*/
+        }#1#
     }
 
     void OnInspectorUpdate()
@@ -51,3 +52,4 @@ public class PhysicsObjectInspector : Editor
         Repaint();
     }
 }
+*/
