@@ -21,6 +21,8 @@ public class MapleBuilder : AbstractBuilder
         context.Add("step",         config.Step.ToString(CultureInfo.InvariantCulture));
         context.Add("ctime",        config.Current.ToString(CultureInfo.InvariantCulture));
 
+        context.Add("additional_vars", config.AdditionalVars);
+
         context.Add("define_variables",         GetCode_DefineVariableCode());
         context.Add("define_variables_fields",  GetCode_DefineFieldVariableCode());
         context.Add("paste_formulas",           GetCode_PastedFormulasCode());
@@ -31,6 +33,17 @@ public class MapleBuilder : AbstractBuilder
 
         Debug.Log(result);
         OutputConsole.GetInstance().AddMessage("Builder result: " + result);
+        return result;
+    }
+
+    public override string GetCode_DefineAdditionalVarsCode(string additionalVars)
+    {
+        string result = "";
+        var collection = MapleCodeUtil.AdditionalVarRegex.Matches(additionalVars);
+        foreach (Match match in collection)
+        {
+            result += match.Groups[1].Value + ": \n";
+        }
         return result;
     }
 
