@@ -5,6 +5,9 @@ step:=${step}:
 ctime:=${ctime}: 
 calc_count:=(finish-start)/step: 
 counter:=1: 
+isplay:=1:
+
+${additional_vars}
 
 ${define_variables}
 
@@ -17,7 +20,9 @@ do
 
 ${fill_fields}
 
+if (isplay = 1) then
 ${paste_formulas}
+end if:
 
 ctime := ctime + step:
 counter := counter + 1:
