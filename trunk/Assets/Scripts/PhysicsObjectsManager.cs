@@ -3,33 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class PhysicsObjectsManager : MonoBehaviour
+public class PhysicsObjectsManager : MonoBehaviour, IChildrenWindow
 {
-    public Material LineMaterial;
-
-    private bool isShowed = true;
-
     private PhysicsObject _currentPhysicsObject;
 
-    private Rect _windowPosition = new Rect(10, 10, 200, Screen.height / 2);
+    private bool _isOpened;
+    private Rect _windowPosition;
+
+    void Start()
+    {
+        _windowPosition = new Rect(10, 60, 200, Screen.height / 2);
+    }
 
     void OnGUI()
     {
-        _windowPosition = GUI.Window(0, _windowPosition, DoWindow, "Физические объекты");
+        if (_isOpened)
+        {
+            _windowPosition = GUI.Window(0, _windowPosition, DoWindow, "Физические объекты");
+        }
     }
 
-    void DoWindow(int id)
+    public void DoWindow(int id)
     {
-        if (GUI.Button(new Rect(2, 2, 23, 23), "x"))
-        {
-            isShowed = !isShowed;
-
-            if (isShowed) 
-                _windowPosition.height = Screen.height/2;
-            else 
-                _windowPosition.height = 50;
-        }
-
         if (_currentPhysicsObject != null)
             GUI.Label(new Rect(10, 30, _windowPosition.width - 20, 24), "Тек. элемент: " + _currentPhysicsObject.Identifier);
         else
@@ -53,6 +48,16 @@ public class PhysicsObjectsManager : MonoBehaviour
         GUI.DragWindow();
     }
 
+    public bool IsOpened()
+    {
+        return _isOpened;
+    }
+
+    public void SetOpened(bool opened)
+    {
+        _isOpened = opened;
+    }
+
     public PhysicsObject GetCurrectObject()
     {
         return this._currentPhysicsObject;
@@ -62,7 +67,7 @@ public class PhysicsObjectsManager : MonoBehaviour
     {
         _currentPhysicsObject = physicsObject;
 
-        ((MatematicsModelView) FindObjectOfType(typeof (MatematicsModelView))).CurrentPhysicsObject =
+        ((MathematicsModelView) FindObjectOfType(typeof (MathematicsModelView))).CurrentPhysicsObject =
             _currentPhysicsObject;
 
         Debug.Log(string.Format(
