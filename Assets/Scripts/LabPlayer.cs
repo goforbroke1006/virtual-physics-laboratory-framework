@@ -13,6 +13,10 @@ public class LabPlayer : MonoBehaviour
     protected MapleBuilder _mapleBuilder;
     protected MapleParser _mapleParser;
 
+    private PhysicsObjectsManager _physicsObjectsManager;
+    private MathematicsModelView _mathematicsModelView;
+    private ConfigurationManager _configurationManager;
+
     //public WatchTimer GlobalLabTimer;
 
     // Use this for initialization
@@ -25,6 +29,10 @@ public class LabPlayer : MonoBehaviour
 
         _mapleBuilder = new MapleBuilder(PhysicsObjectsManager.GetPhysicsObjects());
         _mapleParser = new MapleParser(PhysicsObjectsManager.GetPhysicsObjects());
+
+        _physicsObjectsManager = (PhysicsObjectsManager) FindObjectOfType(typeof (PhysicsObjectsManager));
+        _mathematicsModelView = (MathematicsModelView) FindObjectOfType(typeof (MathematicsModelView));
+        _configurationManager = (ConfigurationManager)FindObjectOfType(typeof(ConfigurationManager));
     }
 
     void Update()
@@ -41,6 +49,28 @@ public class LabPlayer : MonoBehaviour
 
     void OnGUI()
     {
+        // Главное меню
+        GUI.BeginGroup(new Rect(10, 10, Screen.width - 20, 45));
+        GUI.Box(new Rect(0, 0, Screen.width - 20, 45), "");
+
+        if (GUI.Button(new Rect(10, 5, 100, 35), "Физические\nобъекты"))
+            _physicsObjectsManager.SetOpened(!_physicsObjectsManager.IsOpened());
+        if (GUI.Button(new Rect(115, 5, 100, 35), "Мат.\nмодель"))
+            _mathematicsModelView.SetOpened(!_mathematicsModelView.IsOpened());
+        if (GUI.Button(new Rect(220, 5, 100, 35), "Менеждер\nконфигурации"))
+            _configurationManager.SetOpened(!_configurationManager.IsOpened());
+
+
+        if (GUI.Button(new Rect(Screen.width - 100 - 30, 5, 100, 35), "Свернуть\nвсе окна"))
+        {
+            _configurationManager.SetOpened(false);
+            _physicsObjectsManager.SetOpened(false);
+            _mathematicsModelView.SetOpened(false);
+        }
+
+        GUI.EndGroup();
+
+        // Панель проигрывания
         GUI.BeginGroup(new Rect(Screen.width / 2 - 200, Screen.height - 60, 400, 100));
         GUI.Box(new Rect(0, 0, 400, 55), "Проигрыватель лабораторной работы");
 

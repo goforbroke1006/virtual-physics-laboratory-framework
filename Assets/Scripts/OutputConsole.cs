@@ -28,7 +28,7 @@ public class OutputConsole : MonoBehaviour
         if (Visible)
         {
             _windowPosition = GUI.Window(
-                4,
+                3,
                 _windowPosition,
                 DoWindow,
                 "Консоль");
