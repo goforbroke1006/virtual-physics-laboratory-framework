@@ -14,6 +14,8 @@ public abstract class AbstractBuilder
 
     public abstract string GetCode_Labwork(LabworkConfig config);
 
+    public abstract string GetCode_DefineAdditionalVarsCode(string additionalVars);
+
     public abstract string GetCode_DefineVariableCode();
     public abstract string GetCode_DefineFieldVariableCode();
     public abstract string GetCode_PastedFormulasCode();

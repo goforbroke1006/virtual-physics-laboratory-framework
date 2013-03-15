@@ -13,6 +13,7 @@ public class MapleCodeUtil
     public static readonly Regex FormulaRegex = new Regex(@"([a-zA-Z_]+[:=|\s]{2,}[a-zA-Z0-9_\.\+\-\*\/\(\)\:\=]+[\s|:$]*)");
     public static readonly string FillFieldTemplate = "{0}__{1}__field[counter]:={0}__{1}: \n";
     public static readonly string ReturnFieldTemplate = "{0}__{1}__field = seq({0}__{1}__field[i], i=1..calc_count); \n";
+    public static readonly Regex AdditionalVarRegex = new Regex(@"([a-zA-Z\s]+:=[0-9.]+)"); //[\:]*
 
     // parser 
     public static readonly Regex FieldRegex = new Regex(@"([\w]+__[\w]+)__field[\s|=|\s|\(]+([0-9e\s,.\-]+)[\)]");

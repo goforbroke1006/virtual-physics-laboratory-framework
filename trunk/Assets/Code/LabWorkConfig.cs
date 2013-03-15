@@ -9,4 +9,6 @@ public class LabworkConfig
     public float Finish { get; set; }
     public float Step { get; set; }
     public float Current { get; set; }
+    public string AdditionalVars { get; set; }
+    public string EndingExpression { get; set; }
 }
