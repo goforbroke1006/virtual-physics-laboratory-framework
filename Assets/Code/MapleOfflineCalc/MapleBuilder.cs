@@ -8,11 +8,7 @@ using UnityEngine;
 
 public class MapleBuilder : AbstractBuilder
 {
-    public MapleBuilder(List<PhysicsObject> physicsObjects) : base(physicsObjects)
-    {
-    }
-
-    public override string GetCode_Labwork(LabworkConfig config)
+    public override string GetCode_Labwork(LabworkConfig config, List<PhysicsObject> physicsObjects)
     {
         Dictionary<string, string> context = new Dictionary<string, string>();
 
@@ -23,11 +19,16 @@ public class MapleBuilder : AbstractBuilder
 
         context.Add("additional_vars", config.AdditionalVars);
 
-        context.Add("define_variables",         GetCode_DefineVariableCode());
-        context.Add("define_variables_fields",  GetCode_DefineFieldVariableCode());
-        context.Add("paste_formulas",           GetCode_PastedFormulasCode());
-        context.Add("fill_fields",              GetCode_FillFieldWithVariableCode());
-        context.Add("return_fields",            GetCode_ReturnFieldVariableCode());
+        context.Add("define_variables", 
+            GetCode_DefineVariableCode(physicsObjects));
+        context.Add("define_variables_fields", 
+            GetCode_DefineFieldVariableCode(physicsObjects));
+        context.Add("paste_formulas", 
+            GetCode_PastedFormulasCode(physicsObjects));
+        context.Add("fill_fields", 
+            GetCode_FillFieldWithVariableCode(physicsObjects));
+        context.Add("return_fields", 
+            GetCode_ReturnFieldVariableCode(physicsObjects));
 
         string result = WellocityEngine.MergeTemplate("Codes/template_1", context);
 
@@ -47,29 +48,29 @@ public class MapleBuilder : AbstractBuilder
         return result;
     }
 
-    public override string GetCode_DefineVariableCode()
+    public override string GetCode_DefineVariableCode(List<PhysicsObject> physicsObjects)
     {
         string result = "";
-        foreach (PhysicsObject physicsObject in PhysicsObjects)
+        foreach (PhysicsObject physicsObject in physicsObjects)
             foreach (BasicPhysicsProperty property in physicsObject.GetProperties())
                 result += string.Format(MapleCodeUtil.DefineAndSetVariableTemplate, physicsObject.Identifier, property.GetName(), property.GetValue());
         return result;
     }
 
-    public override string GetCode_DefineFieldVariableCode()
+    public override string GetCode_DefineFieldVariableCode(List<PhysicsObject> physicsObjects)
     {
         string result = "";
-        foreach (PhysicsObject physicsObject in PhysicsObjects)
+        foreach (PhysicsObject physicsObject in physicsObjects)
             foreach (BasicPhysicsProperty property in physicsObject.GetProperties())
                 if (property.BuildField)
                     result += string.Format(MapleCodeUtil.DefineFieldVariableTemplate, physicsObject.Identifier, property.GetName());
         return result;
     }
 
-    public override string GetCode_PastedFormulasCode()
+    public override string GetCode_PastedFormulasCode(List<PhysicsObject> physicsObjects)
     {
         string result = "";
-        foreach (PhysicsObject po in PhysicsObjects)
+        foreach (PhysicsObject po in physicsObjects)
         {
             foreach (BasicPhysicsProperty prop in po.GetProperties())
             {
@@ -88,20 +89,20 @@ public class MapleBuilder : AbstractBuilder
         return result;
     }
 
-    public override string GetCode_FillFieldWithVariableCode()
+    public override string GetCode_FillFieldWithVariableCode(List<PhysicsObject> physicsObjects)
     {
         string result = "";
-        foreach (PhysicsObject physicsObject in PhysicsObjects)
+        foreach (PhysicsObject physicsObject in physicsObjects)
             foreach (BasicPhysicsProperty property in physicsObject.GetProperties())
                 if (property.BuildField)
                     result += string.Format(MapleCodeUtil.FillFieldTemplate, physicsObject.Identifier, property.GetName());
         return result;
     }
 
-    public override string GetCode_ReturnFieldVariableCode()
+    public override string GetCode_ReturnFieldVariableCode(List<PhysicsObject> physicsObjects)
     {
         string result = "";
-        foreach (PhysicsObject physicsObject in PhysicsObjects)
+        foreach (PhysicsObject physicsObject in physicsObjects)
             foreach (BasicPhysicsProperty property in physicsObject.GetProperties())
                 if (property.BuildField)
                     result += string.Format(MapleCodeUtil.ReturnFieldTemplate, physicsObject.Identifier, property.GetName());
