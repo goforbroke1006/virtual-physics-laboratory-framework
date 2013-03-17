@@ -27,7 +27,7 @@ public class LabPlayer : MonoBehaviour
         _currentConfig =
             ((ConfigurationManager)FindObjectOfType(typeof(ConfigurationManager))).GetConfig();
 
-        _mapleBuilder = new MapleBuilder(PhysicsObjectsManager.GetPhysicsObjects());
+        _mapleBuilder = new MapleBuilder();
         _mapleParser = new MapleParser(PhysicsObjectsManager.GetPhysicsObjects());
 
         _physicsObjectsManager = (PhysicsObjectsManager) FindObjectOfType(typeof (PhysicsObjectsManager));
@@ -99,13 +99,14 @@ public class LabPlayer : MonoBehaviour
     {
         if (Application.platform == RuntimePlatform.WindowsWebPlayer)
         {
-            _webConnector.JsExternalCall(_mapleBuilder.GetCode_Labwork(_currentConfig));
+            _webConnector.JsExternalCall(
+                _mapleBuilder.GetCode_Labwork(_currentConfig, PhysicsObjectsManager.GetPhysicsObjects()));
         }
         else if (Application.platform == RuntimePlatform.WindowsEditor || 
             Application.platform == RuntimePlatform.WindowsPlayer)
         {
-            MapleCalculator.Calculate(_mapleBuilder.GetCode_Labwork(
-                _currentConfig), 
+            MapleCalculator.Calculate(
+                _mapleBuilder.GetCode_Labwork(_currentConfig, PhysicsObjectsManager.GetPhysicsObjects()), 
                 this);
         }
     }

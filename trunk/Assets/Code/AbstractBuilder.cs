@@ -5,20 +5,15 @@ using System.Text;
 
 public abstract class AbstractBuilder
 {
-    protected List<PhysicsObject> PhysicsObjects;
+    public AbstractBuilder() { }
 
-    public AbstractBuilder(List<PhysicsObject> physicsObjects)
-    {
-        PhysicsObjects = physicsObjects;
-    }
-
-    public abstract string GetCode_Labwork(LabworkConfig config);
+    public abstract string GetCode_Labwork(LabworkConfig config, List<PhysicsObject> physicsObjects);
 
     public abstract string GetCode_DefineAdditionalVarsCode(string additionalVars);
 
-    public abstract string GetCode_DefineVariableCode();
-    public abstract string GetCode_DefineFieldVariableCode();
-    public abstract string GetCode_PastedFormulasCode();
-    public abstract string GetCode_FillFieldWithVariableCode();
-    public abstract string GetCode_ReturnFieldVariableCode();
+    public abstract string GetCode_DefineVariableCode(List<PhysicsObject> physicsObjects);
+    public abstract string GetCode_DefineFieldVariableCode(List<PhysicsObject> physicsObjects);
+    public abstract string GetCode_PastedFormulasCode(List<PhysicsObject> physicsObjects);
+    public abstract string GetCode_FillFieldWithVariableCode(List<PhysicsObject> physicsObjects);
+    public abstract string GetCode_ReturnFieldVariableCode(List<PhysicsObject> physicsObjects);
 }

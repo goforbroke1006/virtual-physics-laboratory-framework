@@ -34,11 +34,4 @@ public class PhysicsObject : MonoBehaviour
         }
         return null;
     }
-
-    /*public void Reset()
-    {
-        gameObject.transform.position = _startTransform.position;
-        gameObject.transform.rotation = _startTransform.rotation;
-        gameObject.transform.localScale = _startTransform.localScale;
-    }*/
 }
