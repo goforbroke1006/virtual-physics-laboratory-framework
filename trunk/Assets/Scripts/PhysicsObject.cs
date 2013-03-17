@@ -11,7 +11,7 @@ public class PhysicsObject : MonoBehaviour
     {
         try
         {
-            ((PhysicsObjectsManager)FindObjectOfType(typeof(PhysicsObjectsManager))).SetCurrentObject(this);
+            BeanManager.GetPhysicsObjectsManager().SetCurrentObject(this);
         }
         catch (Exception exception)
         {
@@ -24,14 +24,8 @@ public class PhysicsObject : MonoBehaviour
         return GetComponents<BasicPhysicsProperty>().OfType<BasicPhysicsProperty>().ToList();
     }
 
-    public BasicPhysicsProperty GetProperty(string name)
+    public BasicPhysicsProperty GetProperty(string propName)
     {
-        List<BasicPhysicsProperty> list = GetProperties();
-        foreach (BasicPhysicsProperty property in list)
-        {
-            if (property.GetName() == name)
-                return property;
-        }
-        return null;
+        return GetProperties().FirstOrDefault(property => property.GetName() == propName);
     }
 }

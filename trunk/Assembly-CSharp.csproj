@@ -72,10 +72,12 @@
      <Compile Include="Assets\Resources\Formula.cs" />
      <Compile Include="Assets\Resources\FormulasManager.cs" />
      <Compile Include="Assets\Scripts\BasicPhysicsProperty.cs" />
+     <Compile Include="Assets\Scripts\BeanManager.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\ConfigurationManager.cs" />
      <Compile Include="Assets\Scripts\DrawThread.cs" />
      <Compile Include="Assets\Scripts\LabPlayer.cs" />
+     <Compile Include="Assets\Scripts\MainGui.cs" />
      <Compile Include="Assets\Scripts\MathematicsModelView.cs" />
      <Compile Include="Assets\Scripts\OutputConsole.cs" />
      <Compile Include="Assets\Scripts\PhysicsObject.cs" />

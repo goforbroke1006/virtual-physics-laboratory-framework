@@ -1,3 +1,4 @@
+using System;
 using System.Globalization;
 using UnityEngine;
 using System.Collections;
@@ -42,61 +43,68 @@ public class ConfigurationManager : MonoBehaviour, IChildrenWindow
 
     public void DoWindow(int id)
     {
-        GUI.Label(new Rect(5, 25, 150, 23), "Ќачальное врем€ (сек)");
-        _tempStart = GUI.TextField(new Rect(155, 25, 75, 23), _tempStart);
-
-        GUI.Label(new Rect(235, 25, 150, 23), " онечное врем€ (сек)");
-        _tempFinish = GUI.TextField(new Rect(390, 25, 75, 23), _tempFinish);
-
-        GUI.Label(new Rect(5, 50, 150, 23), "“екущее врем€ (сек)");
-        _tempCurrTime = GUI.TextField(new Rect(155, 50, 75, 23), _tempCurrTime);
-
-        GUI.Label(new Rect(235, 50, 150, 23), "¬ременной шаг (сек)");
-        _tempStep = GUI.TextField(new Rect(390, 50, 75, 23), _tempStep);
-
-        GUI.Label(new Rect(10, 75, 250, 23), "ѕеременные по-умолчанию:");
-        GUI.Label(new Rect(30, 90, 600, 160),
-            "start - начальное врем€\n" +
-            "finish - конечное врем€\n" +
-            "step - временной шаг (велич. обратнопропорциональна скор. воспр.)\n" +
-            "ctime - текущее врем€\n" +
-            "calc_count - размерность полей (кол-во вычислений)\n" +
-            "counter - номер текущего вычислени€ дл€ полей\n" +
-            "isplay - вычислени€ выполн€ютс€ до тех пор пока переменна€ равна 1"
-            );
-
-        GUI.Label(new Rect(10, 205, 250, 23), "ƒополнительные переменные (<им€_переменной>:=<значение>:) :");
-        _config.AdditionalVars = GUI.TextArea(
-            new Rect(30, 225, 400, 70),
-            _config.AdditionalVars);
-
-        GUI.Label(new Rect(10, 295, 250, 23), "”словие выхода:");
-        _config.EndingExpression = GUI.TextArea(
-            new Rect(30, 315, 400, 50),
-            _config.EndingExpression);
-
-        if (GUI.Button(new Rect(320, 370, 80, 23), "ќтмена"))
-            _isOpened = false;
-
-        if (GUI.Button(new Rect(410, 370, 80, 23), "—охранить"))
+        try
         {
-            float tempFlStart;
-            if (float.TryParse(_tempStart, out tempFlStart))
-                _config.Start = tempFlStart;
+            GUI.Label(new Rect(5, 25, 150, 23), "Ќачальное врем€ (сек)");
+            _tempStart = GUI.TextField(new Rect(155, 25, 75, 23), _tempStart);
 
-            float tempFlFinish;
-            if (float.TryParse(_tempFinish, out tempFlFinish))
-                _config.Finish = tempFlFinish;
+            GUI.Label(new Rect(235, 25, 150, 23), " онечное врем€ (сек)");
+            _tempFinish = GUI.TextField(new Rect(390, 25, 75, 23), _tempFinish);
 
-            float tempFlCurrent;
-            if (float.TryParse(_tempCurrTime, out tempFlCurrent))
-                _config.Current = tempFlCurrent;
+            GUI.Label(new Rect(5, 50, 150, 23), "“екущее врем€ (сек)");
+            _tempCurrTime = GUI.TextField(new Rect(155, 50, 75, 23), _tempCurrTime);
 
-            float tempFlStep;
-            if (float.TryParse(_tempStep, out tempFlStep))
-                _config.Step = tempFlStep;
+            GUI.Label(new Rect(235, 50, 150, 23), "¬ременной шаг (сек)");
+            _tempStep = GUI.TextField(new Rect(390, 50, 75, 23), _tempStep);
 
-            _isOpened = false;
+            GUI.Label(new Rect(10, 75, 250, 23), "ѕеременные по-умолчанию:");
+            GUI.Label(new Rect(30, 90, 600, 160),
+                "start - начальное врем€\n" +
+                "finish - конечное врем€\n" +
+                "step - временной шаг (велич. обратнопропорциональна скор. воспр.)\n" +
+                "ctime - текущее врем€\n" +
+                "calc_count - размерность полей (кол-во вычислений)\n" +
+                "counter - номер текущего вычислени€ дл€ полей\n" +
+                "isplay - вычислени€ выполн€ютс€ до тех пор пока переменна€ равна 1"
+                );
+
+            GUI.Label(new Rect(10, 205, 250, 23), "ƒополнительные переменные (<им€_переменной>:=<значение>:) :");
+            _config.AdditionalVars = GUI.TextArea(
+                new Rect(30, 225, 400, 70),
+                _config.AdditionalVars);
+
+            GUI.Label(new Rect(10, 295, 250, 23), "”словие выхода:");
+            _config.EndingExpression = GUI.TextArea(
+                new Rect(30, 315, 400, 50),
+                _config.EndingExpression);
+
+            if (GUI.Button(new Rect(320, 370, 80, 23), "ќтмена"))
+                _isOpened = false;
+
+            if (GUI.Button(new Rect(410, 370, 80, 23), "—охранить"))
+            {
+                float tempFlStart;
+                if (float.TryParse(_tempStart, out tempFlStart))
+                    _config.Start = tempFlStart;
+
+                float tempFlFinish;
+                if (float.TryParse(_tempFinish, out tempFlFinish))
+                    _config.Finish = tempFlFinish;
+
+                float tempFlCurrent;
+                if (float.TryParse(_tempCurrTime, out tempFlCurrent))
+                    _config.Current = tempFlCurrent;
+
+                float tempFlStep;
+                if (float.TryParse(_tempStep, out tempFlStep))
+                    _config.Step = tempFlStep;
+
+                _isOpened = false;
+            }
+        }
+        catch (Exception exception)
+        {
+            SetDefaultConfig();
         }
 
         GUI.DragWindow();
