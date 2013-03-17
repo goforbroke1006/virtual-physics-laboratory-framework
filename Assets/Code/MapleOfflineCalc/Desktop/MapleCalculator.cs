@@ -9,17 +9,13 @@ using UnityEngine;
 
 class MapleCalculator
 {
-    private static bool _started = false;
+    public static bool IsMapleStarted;
     private static MapleEngine.MapleCallbacks _cb;
     private static IntPtr _kv = new IntPtr(0);
     private static LabPlayer _labPlayer;
     //private static OutputConsole _console;
 
-    public MapleCalculator()
-    {
-        if (!_started)
-            StartMaple();
-    }
+    public MapleCalculator() { }
 
     private static List<string> _expressions;
     
@@ -30,8 +26,6 @@ class MapleCalculator
     {
         _labPlayer = labPlayer;
 
-        if (!_started)
-            StartMaple();
         _expressions = GetExpressionsList(code);
         int attemps = 0;
         NextCalc();
@@ -40,7 +34,8 @@ class MapleCalculator
             if (_returnResult)
             {
                 //OutputConsole.GetInstance().AddMessage("Received info: \n" + _finalResult);
-                _labPlayer.SetResponse(_finalResult);
+                _labPlayer.Response = _finalResult;
+                StopMaple();
                 break;
             }
             if (tempResult.Length > 0)
@@ -83,9 +78,17 @@ class MapleCalculator
         return list;
     }
 
+    public static void MapleCalculatorMain()
+    {
+        Thread t = new Thread(StartMaple);
+        t.Start();
+    }
+
     public static void StartMaple()
     {
-        if (!_started) _kv = new IntPtr(-1);
+        Debug.Log("Start MAPLE");
+
+        if (!IsMapleStarted) _kv = new IntPtr(-1);
         byte[] err = new byte[2048];
 
         String[] argv = new String[2];
@@ -124,12 +127,14 @@ class MapleCalculator
 
         MapleEngine.EvalMapleStatement(_kv, Encoding.ASCII.GetBytes("plotsetup(maplet):"));
 
-        _started = true;
+        IsMapleStarted = true;
     }
 
     public static void StopMaple()
     {
+        Debug.Log("Stop MAPLE");
         MapleEngine.StopMaple(_kv);
+        IsMapleStarted = false;
     }
 
     private static bool _returnResult = false;

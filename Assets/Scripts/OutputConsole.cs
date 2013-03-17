@@ -43,9 +43,4 @@ public class OutputConsole : MonoBehaviour
 
         GUI.DragWindow();
     }
-
-    public static OutputConsole GetInstance()
-    {
-        return (OutputConsole)FindObjectOfType(typeof(OutputConsole));
-    }
 }

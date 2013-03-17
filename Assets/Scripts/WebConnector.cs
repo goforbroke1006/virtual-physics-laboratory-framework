@@ -1,24 +1,17 @@
-using System;
-using System.Globalization;
-using System.IO;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading;
 using UnityEngine;
 
 public class WebConnector : MonoBehaviour
 {
     public void JsExternalCall(string data)
     {
-        //((OutputConsole)FindObjectOfType(typeof(OutputConsole))).AddMessage("Send: " + data);
+        //BeanManager.GetOutputConsole().AddMessage("Send: " + data);
         if (data.Length > 0)
             Application.ExternalCall("MapleCalculate", data);
     }
 
     public void UnityCall(string data)
     {
-        //OutputConsole.GetInstance().AddMessage("Received info: \n" + data);
-        ((LabPlayer)FindObjectOfType(typeof(LabPlayer))).SetResponse(data);
+        //BeanManager.GetOutputConsole().AddMessage("Received info: \n" + data);
+        BeanManager.GetLabPlayer().Response = data;
     }
 }
