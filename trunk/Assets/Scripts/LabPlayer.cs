@@ -91,6 +91,7 @@ public class LabPlayer : MonoBehaviour
             try
             {
                 _response = value;
+                BeanManager.GetOutputConsole().AddMessage("For parsing: \n" + _response);
                 BeanManager.GetMapleParser().Process(_response);
             }
             catch (Exception exception)

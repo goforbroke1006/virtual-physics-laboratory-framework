@@ -73,9 +73,9 @@ public class ConfigurationManager : MonoBehaviour, IChildrenWindow
                 GetConfig().AdditionalVars);
 
             GUI.Label(new Rect(10, 295, 250, 23), "Условие выхода:");
-            GetConfig().EndingExpression = GUI.TextArea(
+            GetConfig().StopCondition = GUI.TextArea(
                 new Rect(30, 315, 400, 50),
-                GetConfig().EndingExpression);
+                GetConfig().StopCondition);
 
             if (GUI.Button(new Rect(320, 370, 80, 23), "Отмена"))
                 _isOpened = false;
@@ -146,7 +146,7 @@ public class ConfigurationManager : MonoBehaviour, IChildrenWindow
             Current = 0,
             AdditionalVars = "gravity:=9.8: \n" +
                              "normal_temperature:=20: \n",
-            EndingExpression = ""
+            StopCondition = ""
         };
         return config;
     }
