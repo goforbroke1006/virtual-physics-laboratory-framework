@@ -9,7 +9,7 @@ public class WellocityEngine
     public static string MergeTemplate(string fileName, Dictionary<string, string> context)
     {
         TextAsset textAsset = Resources.Load(fileName) as TextAsset;
-        BeanManager.GetOutputConsole().AddMessage("Template merge result:\n" + textAsset.text);
+        //BeanManager.GetOutputConsole().AddMessage("Template merge result:\n" + textAsset.text);
         return MergeTemplate(context, textAsset.text);
     }
 

@@ -17,7 +17,8 @@ public class MapleCodeUtil
 
     // parser 
     public static readonly Regex FieldRegex = new Regex(@"([\w]+__[\w]+)__field[\s|=|\s|\(]+([0-9e\s,.\-]+)[\)]");
-    public static readonly Regex ValueRegex = new Regex(@"([-0-9.e]+)[,]*");
+    //public static readonly Regex ValueRegex = new Regex(@"([-0-9.e]+)[,]*");
+    public static readonly Regex FloatValueRegex = new Regex(@"([\[]+[0-9]+[\]]+)|([-]*[0-9]+[.|e]*[0-9-]*)[,]*");
     public static readonly Regex VariableRegex = new Regex(@"([A-Za-z]+)__([A-Za-z]+)");
     public static readonly Regex ValueDivideRegex = new Regex(@"([-]*)([0-9]*)[.]*([0-9]*)([e]{0,1})([+-]*)([0-9]*)");
 

@@ -10,5 +10,5 @@ public class LabworkConfig
     public float Step { get; set; }
     public float Current { get; set; }
     public string AdditionalVars { get; set; }
-    public string EndingExpression { get; set; }
+    public string StopCondition { get; set; }
 }

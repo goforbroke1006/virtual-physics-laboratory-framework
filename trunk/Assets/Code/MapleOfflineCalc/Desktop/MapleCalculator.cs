@@ -12,36 +12,40 @@ class MapleCalculator
     public static bool IsMapleStarted;
     private static MapleEngine.MapleCallbacks _cb;
     private static IntPtr _kv = new IntPtr(0);
-    private static LabPlayer _labPlayer;
-    //private static OutputConsole _console;
-
-    public MapleCalculator() { }
 
     private static List<string> _expressions;
     
     private static int _counter = 0;
     private static string _finalResult = "";
+    private static String _tempResult = "";
+    private static bool _returnResult = false;
 
-    public static void Calculate(String code, LabPlayer labPlayer)
+    public static void Calculate(string mapleCode, LabPlayer labPlayer)
     {
-        _labPlayer = labPlayer;
+        BeanManager.GetOutputConsole().AddMessage("Calculate with MAPLE");
 
-        _expressions = GetExpressionsList(code);
+        _expressions = GetExpressionsList(mapleCode);
+        if (!IsMapleStarted)
+            StartMaple();
+
         int attemps = 0;
         NextCalc();
         while (true)
         {
             if (_returnResult)
             {
-                //OutputConsole.GetInstance().AddMessage("Received info: \n" + _finalResult);
-                _labPlayer.Response = _finalResult;
-                StopMaple();
+                BeanManager.GetOutputConsole().AddMessage("Maple calculate is finished.");
+                labPlayer.Response = _finalResult + _tempResult;
+                _finalResult = "";
+                _tempResult = "";
+                _returnResult = false;
+                _counter = 0;
                 break;
             }
-            if (tempResult.Length > 0)
+            if (_tempResult.Length > 0)
             {
-                _finalResult += tempResult;
-                tempResult = ""; NextCalc();
+                _finalResult += _tempResult;
+                _tempResult = ""; NextCalc();
             }
             if (attemps >= 20) { NextCalc(); attemps = 0; }
 
@@ -78,15 +82,9 @@ class MapleCalculator
         return list;
     }
 
-    public static void MapleCalculatorMain()
-    {
-        Thread t = new Thread(StartMaple);
-        t.Start();
-    }
-
     public static void StartMaple()
     {
-        Debug.Log("Start MAPLE");
+        BeanManager.GetOutputConsole().AddMessage("Start MAPLE");
 
         if (!IsMapleStarted) _kv = new IntPtr(-1);
         byte[] err = new byte[2048];
@@ -110,18 +108,18 @@ class MapleCalculator
         }
         catch (DllNotFoundException exception)
         {
-            Debug.Log(exception.Message);
+            BeanManager.GetOutputConsole().AddMessage(exception.Message);
             return;
         }
         catch (EntryPointNotFoundException exception)
         {
-            Debug.Log(exception.Message);
+            BeanManager.GetOutputConsole().AddMessage(exception.Message);
             return;
         }
 
         if (_kv.ToInt64() == 0)
         {
-            Debug.Log("_kv.ToInt64() == 0");
+            BeanManager.GetOutputConsole().AddMessage("_kv.ToInt64() == 0");
             return;
         }
 
@@ -132,16 +130,14 @@ class MapleCalculator
 
     public static void StopMaple()
     {
-        Debug.Log("Stop MAPLE");
+        BeanManager.GetOutputConsole().AddMessage("Stop MAPLE");
         MapleEngine.StopMaple(_kv);
         IsMapleStarted = false;
     }
 
-    private static bool _returnResult = false;
-    private static String tempResult = "";
     private static void cbText(IntPtr data, int tag, IntPtr output)
     {
-        tempResult = Marshal.PtrToStringAnsi(output);
+        _tempResult = Marshal.PtrToStringAnsi(output);
         if (_counter == _expressions.Count)
             _returnResult = true;
     }
