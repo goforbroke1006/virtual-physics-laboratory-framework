@@ -36,4 +36,21 @@ public class BeanManager : MonoBehaviour
     {
         return (OutputConsole)FindObjectOfType(typeof(OutputConsole));
     }
+
+    public static MainGui GetMainGui()
+    {
+        return (MainGui)FindObjectOfType(typeof(MainGui));
+    }
+
+    private static MapleBuilder _mapleBuilder;
+    public static MapleBuilder GetMapleBuilder()
+    {
+        return _mapleBuilder ?? (_mapleBuilder = new MapleBuilder());
+    }
+
+    private static MapleParser _mapleParser;
+    public static MapleParser GetMapleParser()
+    {
+        return _mapleParser ?? (_mapleParser = new MapleParser(PhysicsObjectsManager.GetPhysicsObjects()));
+    }
 }

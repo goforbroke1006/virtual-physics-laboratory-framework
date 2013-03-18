@@ -43,7 +43,7 @@ public class PhysicsObjectsManager : MonoBehaviour, IChildrenWindow
             GUI.EndScrollView();
         }
         else
-            Debug.Log("Has not Phys Components");
+            BeanManager.GetOutputConsole().AddMessage("Has not Phys Components");
 
         GUI.DragWindow();
     }
@@ -70,7 +70,7 @@ public class PhysicsObjectsManager : MonoBehaviour, IChildrenWindow
         ((MathematicsModelView) FindObjectOfType(typeof (MathematicsModelView))).CurrentPhysicsObject =
             _currentPhysicsObject;
 
-        Debug.Log(string.Format(
+        BeanManager.GetOutputConsole().AddMessage(string.Format(
             "{0} - SetCurrentObject => Set new current component with name <{1}> ",
             this.GetType(),
             physicsObject.Identifier

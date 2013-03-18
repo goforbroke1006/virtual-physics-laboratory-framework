@@ -21,6 +21,8 @@ public class OutputConsole : MonoBehaviour
             string temp = _content.Substring(MaxLength, _content.Length - MaxLength) + "Cut.";
             _content = temp;
         }
+
+        Debug.Log(message);
     }
 
     void OnGUI()

@@ -13,10 +13,10 @@ public class DrawThread : MonoBehaviour
     // Update is called once per frame
     void OnPostRender() //OnPostRender
     {
-        Debug.Log(string.Format("First point: {0} {1} {2}", 
-            transform.position.x, transform.position.y, transform.position.z));
-        Debug.Log(string.Format("Second point: {0} {1} {2}", 
-            SecondPoint.transform.position.x, SecondPoint.transform.position.y, SecondPoint.transform.position.z));
+//        Debug.Log(string.Format("First point: {0} {1} {2}", 
+//            transform.position.x, transform.position.y, transform.position.z));
+//        Debug.Log(string.Format("Second point: {0} {1} {2}", 
+//            SecondPoint.transform.position.x, SecondPoint.transform.position.y, SecondPoint.transform.position.z));
 
         GL.Begin(GL.LINES);
         //GL.Color(new Color(1, 1, 1, 1));

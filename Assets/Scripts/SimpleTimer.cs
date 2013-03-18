@@ -50,8 +50,7 @@ public class SimpleTimer : MonoBehaviour
         if (_isStarted)
         {
             _ctime += sec;
-            //((OutputConsole)FindObjectOfType(typeof(OutputConsole))).AddMessage("_ctime = " + _ctime);
-            Debug.Log("Add time. Current = " + _ctime);
+            BeanManager.GetOutputConsole().AddMessage("Add time. Current = " + _ctime);
         }
     }
 }

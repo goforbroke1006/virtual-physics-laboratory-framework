@@ -6,35 +6,27 @@ using UnityEngine;
 
 public class LabPlayer : MonoBehaviour
 {
-    private bool _isPlay;
-
-    private LabworkConfig _currentConfig;
-
-    private MapleBuilder _mapleBuilder;
-    private MapleParser _mapleParser;
+    public bool IsPlay;
 
     // Use this for initialization
     void Start()
     {
-        if (Application.platform == RuntimePlatform.WindowsPlayer && !MapleCalculator.IsMapleStarted)
-            MapleCalculator.StartMaple();
-
-        BeanManager.GetConfigurationManager().SetDefaultConfig();
-        _currentConfig = BeanManager.GetConfigurationManager().GetConfig();
-
-        _mapleBuilder = new MapleBuilder();
-        _mapleParser = new MapleParser(PhysicsObjectsManager.GetPhysicsObjects());
+        if (Application.platform == RuntimePlatform.WindowsPlayer) // Application.platform == RuntimePlatform.WindowsEditor ||
+            if (!MapleCalculator.IsMapleStarted)
+                MapleCalculator.StartMaple();
     }
 
     void Update()
     {
-        if (_isPlay)
+        if (IsPlay)
         {
-            _mapleParser.Apply();
+            BeanManager.GetMapleParser().Apply();
+            BeanManager.GetMainGui().TimelineFloatValue = 
+                BeanManager.GetMapleParser().Index * BeanManager.GetConfigurationManager().GetConfig().Step;
 
             List<SimpleTimer> timers = FindObjectsOfType(typeof(SimpleTimer)).OfType<SimpleTimer>().ToList();
             foreach (SimpleTimer timer in timers)
-                timer.AddTime(_currentConfig.Step);
+                timer.AddTime(BeanManager.GetConfigurationManager().GetConfig().Step);
         }
     }
 
@@ -49,35 +41,41 @@ public class LabPlayer : MonoBehaviour
 
     public void CalculateLab()
     {
+        BeanManager.GetOutputConsole().AddMessage("Calculate Lab");
+
         if (Application.platform == RuntimePlatform.WindowsWebPlayer)
         {
             BeanManager.GetWebConnector().JsExternalCall(
-                _mapleBuilder.GetCode_Labwork(_currentConfig, PhysicsObjectsManager.GetPhysicsObjects()));
+                BeanManager.GetMapleBuilder().GetCode_Labwork(
+                    BeanManager.GetConfigurationManager().GetConfig(),
+                    PhysicsObjectsManager.GetPhysicsObjects()));
         }
         else if (Application.platform == RuntimePlatform.WindowsEditor ||
             Application.platform == RuntimePlatform.WindowsPlayer)
         {
             MapleCalculator.Calculate(
-                _mapleBuilder.GetCode_Labwork(_currentConfig, PhysicsObjectsManager.GetPhysicsObjects()),
+                BeanManager.GetMapleBuilder().GetCode_Labwork(
+                    BeanManager.GetConfigurationManager().GetConfig(),
+                    PhysicsObjectsManager.GetPhysicsObjects()),
                 this);
         }
     }
 
     public void PlayLab()
     {
-        _mapleParser.Apply();
-        _isPlay = true;
+        BeanManager.GetMapleParser().Apply();
+        IsPlay = true;
     }
 
     public void PauseLab()
     {
-        _isPlay = false;
+        IsPlay = false;
     }
 
     public void ResetLab()
     {
-        _isPlay = false;
-        _mapleParser.Apply(0);
+        IsPlay = false;
+        BeanManager.GetMapleParser().Apply(0);
     }
 
     private string _response = "";
@@ -89,7 +87,7 @@ public class LabPlayer : MonoBehaviour
             try
             {
                 _response = value;
-                _mapleParser.Process(_response);
+                BeanManager.GetMapleParser().Process(_response);
             }
             catch (Exception exception)
             {

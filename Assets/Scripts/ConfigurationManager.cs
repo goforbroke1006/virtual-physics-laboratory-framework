@@ -14,7 +14,6 @@ public class ConfigurationManager : MonoBehaviour, IChildrenWindow
     // Use this for initialization
     void Start()
     {
-        SetDefaultConfig();
         _windowPosition = new Rect(Screen.width / 4, Screen.height / 12, 500, 400);
     }
 
@@ -69,14 +68,14 @@ public class ConfigurationManager : MonoBehaviour, IChildrenWindow
                 );
 
             GUI.Label(new Rect(10, 205, 250, 23), "Дополнительные переменные (<имя_переменной>:=<значение>:) :");
-            _config.AdditionalVars = GUI.TextArea(
+            GetConfig().AdditionalVars = GUI.TextArea(
                 new Rect(30, 225, 400, 70),
-                _config.AdditionalVars);
+                GetConfig().AdditionalVars);
 
             GUI.Label(new Rect(10, 295, 250, 23), "Условие выхода:");
-            _config.EndingExpression = GUI.TextArea(
+            GetConfig().EndingExpression = GUI.TextArea(
                 new Rect(30, 315, 400, 50),
-                _config.EndingExpression);
+                GetConfig().EndingExpression);
 
             if (GUI.Button(new Rect(320, 370, 80, 23), "Отмена"))
                 _isOpened = false;
@@ -85,26 +84,26 @@ public class ConfigurationManager : MonoBehaviour, IChildrenWindow
             {
                 float tempFlStart;
                 if (float.TryParse(_tempStart, out tempFlStart))
-                    _config.Start = tempFlStart;
+                    GetConfig().Start = tempFlStart;
 
                 float tempFlFinish;
                 if (float.TryParse(_tempFinish, out tempFlFinish))
-                    _config.Finish = tempFlFinish;
+                    GetConfig().Finish = tempFlFinish;
 
                 float tempFlCurrent;
                 if (float.TryParse(_tempCurrTime, out tempFlCurrent))
-                    _config.Current = tempFlCurrent;
+                    GetConfig().Current = tempFlCurrent;
 
                 float tempFlStep;
                 if (float.TryParse(_tempStep, out tempFlStep))
-                    _config.Step = tempFlStep;
+                    GetConfig().Step = tempFlStep;
 
                 _isOpened = false;
             }
         }
         catch (Exception exception)
         {
-            SetDefaultConfig();
+            BeanManager.GetOutputConsole().AddMessage(exception.Message);
         }
 
         GUI.DragWindow();
@@ -120,16 +119,16 @@ public class ConfigurationManager : MonoBehaviour, IChildrenWindow
         _isOpened = opened;
         if (_isOpened)
         {
-            _tempStart = _config.Start.ToString(CultureInfo.InvariantCulture);
-            _tempFinish = _config.Finish.ToString(CultureInfo.InvariantCulture);
-            _tempCurrTime = _config.Current.ToString(CultureInfo.InvariantCulture);
-            _tempStep = _config.Step.ToString(CultureInfo.InvariantCulture);
+            _tempStart = GetConfig().Start.ToString(CultureInfo.InvariantCulture);
+            _tempFinish = GetConfig().Finish.ToString(CultureInfo.InvariantCulture);
+            _tempCurrTime = GetConfig().Current.ToString(CultureInfo.InvariantCulture);
+            _tempStep = GetConfig().Step.ToString(CultureInfo.InvariantCulture);
         }
     }
 
     public LabworkConfig GetConfig()
     {
-        return _config;
+        return _config ?? (_config = GetDefaultConfig());
     }
 
     public void SetConfig(LabworkConfig config)
@@ -137,7 +136,7 @@ public class ConfigurationManager : MonoBehaviour, IChildrenWindow
         _config = config;
     }
 
-    public void SetDefaultConfig()
+    public LabworkConfig GetDefaultConfig()
     {
         LabworkConfig config = new LabworkConfig
         {
@@ -149,6 +148,6 @@ public class ConfigurationManager : MonoBehaviour, IChildrenWindow
                              "normal_temperature:=20: \n",
             EndingExpression = ""
         };
-        SetConfig(config);
+        return config;
     }
 }
