@@ -1,20 +1,24 @@
 using System;
 using UnityEngine;
 
-public class MainGui : MonoBehaviour {
+public class MainGui : MonoBehaviour
+{
 
     public float TimelineFloatValue { get; set; }
     private int _timelineIntValue = 0;
+    //private Rect _timelineRect = new Rect(0, -10, 100, 30);
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    // Use this for initialization
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 
     void OnGUI()
     {
@@ -44,30 +48,27 @@ public class MainGui : MonoBehaviour {
         GUI.EndGroup();
 
         // Панель проигрывания
-        GUI.BeginGroup(new Rect(Screen.width / 2 - 200, Screen.height - 60, 400, 100));
-
+        Rect playingPanelGroupRect = new Rect(Screen.width / 2 - 200, Screen.height - 60, 400, 100);
         try
         {
+            Rect timelineRect = new Rect(playingPanelGroupRect.x, playingPanelGroupRect.y - 30, playingPanelGroupRect.width, 10);
+
+            TimelineFloatValue = GUI.HorizontalSlider(
+                timelineRect,
+                TimelineFloatValue,
+                BeanManager.GetConfigurationManager().GetConfig().Start,
+                BeanManager.GetConfigurationManager().GetConfig().Finish);
             if (!BeanManager.GetLabPlayer().IsPlay && BeanManager.GetMapleParser().HasFields())
             {
-                TimelineFloatValue = GUI.HorizontalSlider(
-                    new Rect(25, 25, 100, 30),
-                    TimelineFloatValue,
-                    BeanManager.GetConfigurationManager().GetConfig().Start,
-                    BeanManager.GetConfigurationManager().GetConfig().Finish);
-                _timelineIntValue = (int) Math.Round(TimelineFloatValue);
+                _timelineIntValue = (int)Math.Round(TimelineFloatValue / BeanManager.GetConfigurationManager().GetConfig().Step);
                 BeanManager.GetMapleParser().Apply(_timelineIntValue);
             }
-            else
-                GUI.HorizontalSlider(
-                    new Rect(25, 25, 100, 30),
-                    TimelineFloatValue,
-                    BeanManager.GetConfigurationManager().GetConfig().Start,
-                    BeanManager.GetConfigurationManager().GetConfig().Finish);
-        } catch (Exception exception)
+        }
+        catch (Exception exception)
         {
             BeanManager.GetOutputConsole().AddMessage(exception.Message);
         }
+        GUI.BeginGroup(playingPanelGroupRect);
 
         GUI.Box(new Rect(0, 0, 400, 55), "Проигрыватель лабораторной работы");
 

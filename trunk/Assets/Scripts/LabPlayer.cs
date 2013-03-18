@@ -20,6 +20,9 @@ public class LabPlayer : MonoBehaviour
     {
         if (IsPlay)
         {
+            if (BeanManager.GetMapleParser().FieldsSize() == BeanManager.GetMapleParser().Index)
+                IsPlay = false;
+
             BeanManager.GetMapleParser().Apply();
             BeanManager.GetMainGui().TimelineFloatValue = 
                 BeanManager.GetMapleParser().Index * BeanManager.GetConfigurationManager().GetConfig().Step;
@@ -35,7 +38,8 @@ public class LabPlayer : MonoBehaviour
         if (Application.platform == RuntimePlatform.WindowsEditor ||
             Application.platform == RuntimePlatform.WindowsPlayer)
         {
-            MapleCalculator.StopMaple();
+            if(MapleCalculator.IsMapleStarted)
+                MapleCalculator.StopMaple();
         }
     }
 
