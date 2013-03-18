@@ -10,13 +10,29 @@ public class MapleParser : AbstractParser
 {
     private Dictionary<string, List<string>> _fields;
 
-    private int _index;
+    public int Index { get; private set; }
 
-    
-
-    public MapleParser(List<PhysicsObject> physicsObjects) : base(physicsObjects)
+    public void ClearFields()
     {
-        _index = 0;
+        _fields = null;
+    }
+
+    public bool HasFields()
+    {
+        return (_fields != null && _fields.Count > 0);
+    }
+
+    public int FieldsSize()
+    {
+        if (_fields != null && _fields.Count > 0 && _fields.First().Value.Count > 0)
+            return _fields.First().Value.Count;
+        return 0;
+    }
+
+    public MapleParser(List<PhysicsObject> physicsObjects)
+        : base(physicsObjects)
+    {
+        Index = 0;
     }
 
     public override void Process(string data)
@@ -24,21 +40,24 @@ public class MapleParser : AbstractParser
         _fields = new Dictionary<string, List<string>>();
 
         var fieldMatches = MapleCodeUtil.FieldRegex.Matches(data);
+
+        //BeanManager.GetOutputConsole().AddMessage("Maple parser - Match found " + fieldMatches.Count);
+
         foreach (Match fieldMatch in fieldMatches)
         {
             List<string> values = new List<string>();
-            var valuesCollection = MapleCodeUtil.ValueRegex.Matches(fieldMatch.Groups[2].Value);
+            var valuesCollection = MapleCodeUtil.FloatValueRegex.Matches(fieldMatch.Groups[2].Value);
 
             string parsingConsoleOutput = "PARSE -> \n" + fieldMatch.Groups[1].Value + ": ";
 
             foreach (Match valueMatch in valuesCollection)
             {
-                string generalViewValue = valueMatch.Groups[1].Value;
+                string generalViewValue = valueMatch.Groups[2].Value;
                 Match match = MapleCodeUtil.ValueDivideRegex.Match(generalViewValue);
 
                 NumberView numberView = new NumberView
                 {
-                    IsPositive = (match.Groups[1].Value != "-"), 
+                    IsPositive = (match.Groups[1].Value != "-"),
                     NumberBeforePoint = Convert.ToInt64(match.Groups[2].Value.Length > 0 ? match.Groups[2].Value : "0"),
                     NumberAfterPoint = Convert.ToSingle(match.Groups[3].Value.Length > 0 ? "0." + match.Groups[3].Value : "0"),
                     HasExp = (match.Groups[4].Value == "e"),
@@ -48,8 +67,8 @@ public class MapleParser : AbstractParser
                 float floatValue = 0;
                 floatValue += numberView.NumberBeforePoint;
                 floatValue += numberView.NumberAfterPoint;
-                floatValue = (float) (numberView.HasExp ? floatValue * Math.Pow(10, numberView.Degr) : floatValue);
-                floatValue = !numberView.IsPositive ? floatValue*(-1) : floatValue;
+                floatValue = (float)(numberView.HasExp ? floatValue * Math.Pow(10, numberView.Degr) : floatValue);
+                floatValue = !numberView.IsPositive ? floatValue * (-1) : floatValue;
 
                 values.Add(floatValue.ToString(CultureInfo.InvariantCulture));
                 parsingConsoleOutput += floatValue.ToString(CultureInfo.InvariantCulture) + ",";
@@ -57,27 +76,21 @@ public class MapleParser : AbstractParser
 
             _fields.Add(fieldMatch.Groups[1].Value, values);
 
-            //OutputConsole.GetInstance().AddMessage(parsingConsoleOutput);
-            Debug.Log(parsingConsoleOutput);
+            BeanManager.GetOutputConsole().AddMessage(parsingConsoleOutput);
         }
     }
 
     public override int Apply()
     {
-        if (_fields != null && _fields.Count > 0 && _index < _fields.First().Value.Count)
-        {
-            foreach (KeyValuePair<string, List<string>> field in _fields)
-            {
-                var match = MapleCodeUtil.VariableRegex.Match(field.Key);
-                ApplyVariable(match.Groups[1].Value, match.Groups[2].Value, field.Value[_index]);
-                Debug.Log(string.Format("Apply {0} {1} = {2}", match.Groups[1].Value, match.Groups[2].Value, field.Value[_index]));
-            }
+        Apply(Index);
 
-            if (_index + 1 <= _fields.First().Value.Count)
-                _index++;
-            return _index - 1;
+        if (_fields != null && _fields.Count > 0 && Index < _fields.First().Value.Count)
+        {
+            if (Index + 1 <= _fields.First().Value.Count)
+                Index++;
+            return Index - 1;
         }
-        return _index;
+        return Index;
     }
 
     public override void Apply(int index)
@@ -87,10 +100,10 @@ public class MapleParser : AbstractParser
             {
                 var match = MapleCodeUtil.VariableRegex.Match(field.Key);
                 ApplyVariable(match.Groups[1].Value, match.Groups[2].Value, field.Value[index]);
-                Debug.Log(string.Format("Apply(int) {0} {1} = {2}", match.Groups[1].Value, match.Groups[2].Value, field.Value[index]));
             }
 
-        _index = index;
+        Index = index;
+        //BeanManager.GetOutputConsole().AddMessage("Apply [" + Index + "] fields value.");
     }
 
     public override void ApplyVariable(string identifier, string propertyName, string propertyValue)

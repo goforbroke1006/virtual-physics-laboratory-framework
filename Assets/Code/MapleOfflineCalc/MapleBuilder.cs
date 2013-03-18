@@ -18,6 +18,7 @@ public class MapleBuilder : AbstractBuilder
         context.Add("ctime",        config.Current.ToString(CultureInfo.InvariantCulture));
 
         context.Add("additional_vars", config.AdditionalVars);
+        context.Add("stop_condition", config.StopCondition);
 
         context.Add("define_variables", 
             GetCode_DefineVariableCode(physicsObjects));
@@ -30,10 +31,9 @@ public class MapleBuilder : AbstractBuilder
         context.Add("return_fields", 
             GetCode_ReturnFieldVariableCode(physicsObjects));
 
-        string result = WellocityEngine.MergeTemplate("Codes/template_1", context);
+        string result = WellocityEngine.MergeTemplate("Codes/template_2", context);
 
-        Debug.Log(result);
-        BeanManager.GetOutputConsole().AddMessage("Builder result: " + result);
+        //BeanManager.GetOutputConsole().AddMessage("Builder result: " + result);
         return result;
     }
 
