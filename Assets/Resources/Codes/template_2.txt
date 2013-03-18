@@ -1,4 +1,4 @@
-restart: 
+﻿restart: 
 start:=${start}: 
 finish:=${stop}: 
 step:=${step}: 
@@ -15,14 +15,13 @@ ${define_variables_fields}
 
 while 
     start <= ctime + step and 
-    ctime + step <= finish 
+    ctime + step <= finish and
+	isplay = 1
 do
 
 ${fill_fields}
 
-if (isplay = 1) then
 ${paste_formulas}
-end if:
 
 if (${stop_condition}) then
 	isplay:=0:
