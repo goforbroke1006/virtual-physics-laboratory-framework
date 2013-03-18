@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
-using System.Collections;
 
 public class MainGui : MonoBehaviour {
+
+    public float TimelineFloatValue { get; set; }
+    private int _timelineIntValue = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -42,9 +45,37 @@ public class MainGui : MonoBehaviour {
 
         // Панель проигрывания
         GUI.BeginGroup(new Rect(Screen.width / 2 - 200, Screen.height - 60, 400, 100));
+
+        try
+        {
+            if (!BeanManager.GetLabPlayer().IsPlay && BeanManager.GetMapleParser().HasFields())
+            {
+                TimelineFloatValue = GUI.HorizontalSlider(
+                    new Rect(25, 25, 100, 30),
+                    TimelineFloatValue,
+                    BeanManager.GetConfigurationManager().GetConfig().Start,
+                    BeanManager.GetConfigurationManager().GetConfig().Finish);
+                _timelineIntValue = (int) Math.Round(TimelineFloatValue);
+                BeanManager.GetMapleParser().Apply(_timelineIntValue);
+            }
+            else
+                GUI.HorizontalSlider(
+                    new Rect(25, 25, 100, 30),
+                    TimelineFloatValue,
+                    BeanManager.GetConfigurationManager().GetConfig().Start,
+                    BeanManager.GetConfigurationManager().GetConfig().Finish);
+        } catch (Exception exception)
+        {
+            BeanManager.GetOutputConsole().AddMessage(exception.Message);
+        }
+
         GUI.Box(new Rect(0, 0, 400, 55), "Проигрыватель лабораторной работы");
 
-        if (GUI.Button(new Rect(0, 25, 100, 24), "Вычислить")) BeanManager.GetLabPlayer().CalculateLab();
+        if (GUI.Button(new Rect(0, 25, 100, 24), "Вычислить"))
+        {
+            BeanManager.GetOutputConsole().AddMessage("Press button, Try Calculate");
+            BeanManager.GetLabPlayer().CalculateLab();
+        }
         if (BeanManager.GetLabPlayer().Response.Length > 0)
         {
             if (GUI.Button(new Rect(100, 25, 100, 24), "Запустить")) BeanManager.GetLabPlayer().PlayLab();
