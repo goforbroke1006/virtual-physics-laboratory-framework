@@ -141,12 +141,12 @@ public class ConfigurationManager : MonoBehaviour, IChildrenWindow
         LabworkConfig config = new LabworkConfig
         {
             Start = 0,
-            Finish = 100,
+            Finish = 30,
             Step = 0.1f,
             Current = 0,
             AdditionalVars = "gravity:=9.8: \n" +
                              "normal_temperature:=20: \n",
-            StopCondition = ""
+            StopCondition = "ctime + step >= finish"
         };
         return config;
     }

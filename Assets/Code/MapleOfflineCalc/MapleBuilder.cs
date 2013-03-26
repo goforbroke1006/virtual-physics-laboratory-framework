@@ -33,7 +33,7 @@ public class MapleBuilder : AbstractBuilder
 
         string result = WellocityEngine.MergeTemplate("Codes/template_2", context);
 
-        //BeanManager.GetOutputConsole().AddMessage("Builder result: " + result);
+        BeanManager.GetOutputConsole().AddMessage("Builder result: " + result);
         return result;
     }
 
